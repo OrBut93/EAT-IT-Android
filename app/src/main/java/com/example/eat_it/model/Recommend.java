@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 public class Recommend {
 
+    String id;
     String title;
     String location;
     String description;
