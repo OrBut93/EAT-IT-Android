@@ -5,16 +5,21 @@ import java.util.List;
 
 public class Model {
 
-    static final Model instance = new Model();
+    List<Recommend> recommends = new LinkedList<>();
+    static public final Model instance = new Model();
 
     private Model(){
+        for(int i=0; i<10;i++) {
+            Recommend rc= new Recommend("i", "title" + i);
+            recommends.add(rc);
+        }
     }
 
-    List<Recommend> getAllRec(){
-        return new LinkedList<Recommend>();
+    public List<Recommend> getAllRec(){
+        return recommends;
     }
 
-    Recommend getRecommend(String id){
+    public Recommend getRecommend(String id){
         return null;
     }
 

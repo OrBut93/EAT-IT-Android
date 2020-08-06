@@ -14,14 +14,22 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.eat_it.model.Model;
+import com.example.eat_it.model.Recommend;
+
+import java.util.List;
 import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
+    List<Recommend> data;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        data =  Model.instance.getAllRec();
 
         ListView list = findViewById(R.id.main_list);
         MyAdapter adapter = new MyAdapter();
@@ -43,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         //count the number of rows
         public int getCount() {
-            return 5;
+            return data.size();
         }
 
         @Override
@@ -62,13 +70,14 @@ public class MainActivity extends AppCompatActivity {
             {
                 convertView = inflater.inflate(R.layout.list_row , null);
             }
+            Recommend recommend = data.get(position);
             TextView titleTv = convertView.findViewById(R.id.row_title_tv);
             TextView locationTv = convertView.findViewById(R.id.row_location_tv);
             TextView descriptionTv = convertView.findViewById(R.id.row_descroption_tv);
             ImageView imageView = convertView.findViewById(R.id.imageView);
-            titleTv.setText("name " + position);
-            locationTv.setText("location" + position);
-            descriptionTv.setText("desc "+ position);
+            titleTv.setText(recommend.title);
+            locationTv.setText(recommend.location);
+            descriptionTv.setText(recommend.description);
             return convertView;
         }
     }

@@ -5,10 +5,15 @@ import android.widget.ImageView;
 
 public class Recommend {
 
-    String id;
-    String title;
-    String location;
-    String description;
-    Image avatar;
+    public String id;
+    public String title;
+    public String location;
+    public String description;
+    public Image avatar;
+
+    Recommend(String id,String title){
+        this.title= title;
+        this.id = id;
+    }
 
 }
