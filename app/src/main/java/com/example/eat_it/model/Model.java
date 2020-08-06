@@ -15,9 +15,15 @@ public class Model {
     }
 
     Recommend getRecommend(String id){
-
         return null;
     }
 
+    void updateRec(Recommend recommend) {
+    }
 
+    void deleteRec(String id) {
+    }
+
+    void addRec(Recommend recommend) {
+    }
 }
