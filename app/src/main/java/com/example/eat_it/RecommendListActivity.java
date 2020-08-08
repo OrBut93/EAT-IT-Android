@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,23 +35,42 @@ public class RecommendListActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         list.setLayoutManager(layoutManager);
 
-       MyAdapter adapter = new MyAdapter();
+        RecListAdapter adapter = new RecListAdapter();
        list.setAdapter(adapter);
+
+       adapter.setOnItemClickListener(new OnItemClickListener() {
+           @Override
+           public void onClick(int position) {
+               Log.d("TAG", "ROW WAS CLICKED"+ position);
+           }
+       });
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder{
-
         TextView titleTv;
         TextView locationTv;
         TextView descriptionTv;
         ImageView imageView;
 
-        public RecommendViewHolder(@NonNull View itemView) {
+
+        public RecommendViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             titleTv = itemView.findViewById(R.id.row_title_tv);
             locationTv = itemView.findViewById(R.id.row_location_tv);
             descriptionTv = itemView.findViewById(R.id.row_descroption_tv);
             imageView = itemView.findViewById(R.id.imageView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onClick(position);
+                        }
+                    }
+
+                }
+            });
         }
 
         void bind(Recommend recommend){
@@ -60,15 +80,23 @@ public class RecommendListActivity extends AppCompatActivity {
         }
     }
 
-    class MyAdapter extends RecyclerView.Adapter<RecommendViewHolder>{
+    interface OnItemClickListener{
+        void onClick(int position);
+    }
+
+    class RecListAdapter extends RecyclerView.Adapter<RecommendViewHolder>{
+        private OnItemClickListener listener;
+
+        void setOnItemClickListener(OnItemClickListener listener){
+            this.listener = listener;
+        }
 
         @NonNull
         @Override
         // what happen when create a view of row
-
         public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_row, viewGroup, false);
-            RecommendViewHolder viewHolder = new RecommendViewHolder(view);
+            RecommendViewHolder viewHolder = new RecommendViewHolder(view,listener);
             return viewHolder;
         }
 
@@ -77,9 +105,6 @@ public class RecommendListActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecommendViewHolder holder, int position) {
             Recommend recommend = data.get(position);
             holder.bind(recommend);
-
-
-
         }
 
         @Override
