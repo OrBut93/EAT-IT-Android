@@ -5,6 +5,7 @@
     android:id="@+id/rec_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     tools:context=".RecommendDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,33 +13,74 @@
 
     <ImageView
         android:id="@+id/rec_details_image"
-        android:layout_width="347dp"
-        android:layout_height="356dp"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="347dp"
+        android:layout_width="290dp"
+        android:layout_height="238dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rec_details_description"
         tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/rec_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="169dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="184dp"
+        android:layout_marginBottom="32dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="169dp"
-        tools:layout_editor_absoluteY="65dp" />
+        app:layout_constraintBottom_toTopOf="@+id/rec_details_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/rec_details_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="187dp"
+        android:layout_marginBottom="240dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="166dp"
-        tools:layout_editor_absoluteY="116dp" />
+        app:layout_constraintBottom_toTopOf="@+id/rec_details_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rec_details_title" />
 
     <TextView
         android:id="@+id/rec_details_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="38dp"
+        android:layout_marginTop="172dp"
+        android:layout_marginEnd="316dp"
+        android:layout_marginBottom="80dp"
         android:text="TextView"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="172dp" />
+        app:layout_constraintBottom_toTopOf="@+id/rec_details_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/rec_details_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="232dp"
+        android:layout_marginBottom="19dp"
+        android:background="#FFFFFF"
+        android:text="id"
+        app:layout_constraintBottom_toTopOf="@+id/rec_details_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

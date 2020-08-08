@@ -10,7 +10,7 @@ public class Model {
 
     private Model(){
         for(int i=0; i<10;i++) {
-            Recommend rc= new Recommend("i", "title" + i,  "location"+i, "desc"+i, null);
+            Recommend rc= new Recommend("id"+i, "title" + i,  "location"+i, "desc"+i, null);
             recommends.add(rc);
         }
     }

@@ -1,13 +1,24 @@
 package com.example.eat_it;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.eat_it.model.Model;
+import com.example.eat_it.model.Recommend;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,53 +27,25 @@ import android.widget.TextView;
  */
 public class RecListFragment extends Fragment {
 
-    private String title;
-    private TextView titleTv;
-    void setTitle(String title){
-        if(titleTv!=null){
-            titleTv.setText(title);
-        }
-        this.title = title;
+    RecyclerView list;
+    List<Recommend> data;
+
+    interface Delegate{
+        void onItemSelected(Recommend recommend);
     }
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    Delegate parent;
 
     public RecListFragment() {
-        // Required empty public constructor
+        data= Model.instance.getAllRec();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecListFragment.
-     */
-//    // TODO: Rename and change types and number of parameters
-//    public static RecListFragment newInstance(String param1, String param2) {
-////        RecListFragment fragment = new RecListFragment();
-////        Bundle args = new Bundle();
-////        args.putString(ARG_PARAM1, param1);
-////        args.putString(ARG_PARAM2, param2);
-////        fragment.setArguments(args);
-////        return fragment;
-//    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if(context instanceof Delegate){
+            parent = (Delegate) getActivity();
+        } else{
+            throw new RuntimeException(context.toString() + "must implement Delegate");
         }
     }
 
@@ -71,8 +54,102 @@ public class RecListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rec_list, container, false);
-         titleTv = view.findViewById(R.id.recommned_list_title);
-        titleTv.setText("title");
+
+        list = view.findViewById(R.id.recommend_list_list);
+        list.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        list.setLayoutManager(layoutManager);
+
+        RecListAdapter adapter = new RecListAdapter();
+        list.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new RecommendListActivity.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                Log.d("TAG", "ROW WAS CLICKED"+ position);
+                Recommend recommend = data.get(position);
+                parent.onItemSelected(recommend);
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        parent= null;
+    }
+
+    static class RecommendViewHolder extends RecyclerView.ViewHolder{
+        TextView idTv;
+        TextView titleTv;
+        TextView locationTv;
+        TextView descriptionTv;
+        ImageView imageView;
+        Recommend recommend;
+
+
+        public RecommendViewHolder(@NonNull View itemView, final RecommendListActivity.OnItemClickListener listener) {
+            super(itemView);
+            idTv = itemView.findViewById(R.id.row_id);
+            titleTv = itemView.findViewById(R.id.row_title_tv);
+            locationTv = itemView.findViewById(R.id.row_location_tv);
+            descriptionTv = itemView.findViewById(R.id.row_descroption_tv);
+            imageView = itemView.findViewById(R.id.row_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener!=null){
+                        int position = getAdapterPosition();
+                        if(position!=RecyclerView.NO_POSITION){
+                            listener.onClick(position);
+                        }
+                    }
+
+                }
+            });
+        }
+
+        void bind(Recommend recommend){
+            idTv.setText(recommend.id);
+            titleTv.setText(recommend.title);
+            locationTv.setText(recommend.location);
+            descriptionTv.setText(recommend.description);
+        }
+    }
+
+    interface OnItemClickListener{
+        void onClick(int position);
+    }
+
+    class RecListAdapter extends RecyclerView.Adapter<RecommendListActivity.RecommendViewHolder>{
+        private RecommendListActivity.OnItemClickListener listener;
+
+        void setOnItemClickListener(RecommendListActivity.OnItemClickListener listener){
+            this.listener = listener;
+        }
+
+        @NonNull
+        @Override
+        // what happen when create a view of row
+        public RecommendListActivity.RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View view= LayoutInflater.from(getActivity()).inflate(R.layout.list_row, viewGroup, false);
+            RecommendListActivity.RecommendViewHolder viewHolder = new RecommendListActivity.RecommendViewHolder(view,listener);
+            return viewHolder;
+        }
+
+        //take a row and connect her data
+        @Override
+        public void onBindViewHolder(@NonNull RecommendListActivity.RecommendViewHolder holder, int position) {
+            Recommend recommend = data.get(position);
+            holder.bind(recommend);
+        }
+
+        @Override
+        public int getItemCount() {
+            return data.size();
+        }
     }
 }

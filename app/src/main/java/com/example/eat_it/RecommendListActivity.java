@@ -46,6 +46,7 @@ public class RecommendListActivity extends AppCompatActivity {
     }
 
     static class RecommendViewHolder extends RecyclerView.ViewHolder{
+        TextView idTv;
         TextView titleTv;
         TextView locationTv;
         TextView descriptionTv;
@@ -54,6 +55,7 @@ public class RecommendListActivity extends AppCompatActivity {
 
         public RecommendViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
+           idTv = itemView.findViewById(R.id.row_id);
             titleTv = itemView.findViewById(R.id.row_title_tv);
             locationTv = itemView.findViewById(R.id.row_location_tv);
             descriptionTv = itemView.findViewById(R.id.row_descroption_tv);

@@ -71,11 +71,13 @@ public class MainActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.list_row , null);
             }
             Recommend recommend = data.get(position);
+            TextView idTv = convertView.findViewById(R.id.row_id);
             TextView titleTv = convertView.findViewById(R.id.row_title_tv);
             TextView locationTv = convertView.findViewById(R.id.row_location_tv);
             TextView descriptionTv = convertView.findViewById(R.id.row_descroption_tv);
             ImageView imageView = convertView.findViewById(R.id.row_image);
 
+            idTv.setText(recommend.id);
             titleTv.setText(recommend.title);
             locationTv.setText(recommend.location);
             descriptionTv.setText(recommend.description);

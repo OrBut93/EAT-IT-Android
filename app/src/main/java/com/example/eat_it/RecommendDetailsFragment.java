@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
 
@@ -17,70 +18,43 @@ import com.example.eat_it.model.Recommend;
  */
 public class RecommendDetailsFragment extends Fragment {
 
-    Recommend recommend;
+    private Recommend recommend;
+    TextView id;
+    TextView title;
+    TextView location;
+    TextView description;
+    TextView avatar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommend_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_recommend_details, container, false);
+        id = view.findViewById(R.id.rec_details_id);
+        title= view.findViewById(R.id.rec_details_title);
+        location = view.findViewById(R.id.rec_details_location);
+        description = view.findViewById(R.id.rec_details_description);
+
+        if (recommend!=null){
+            update_display();
+        }
+        return view;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
+    private void update_display() {
+        id.setText(recommend.id);
+        title.setText(recommend.title);
+        location.setText(recommend.location);
+        description.setText(recommend.description);
+    }
 
     public RecommendDetailsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecommendDetailsFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-//    public static RecommendDetailsFragment newInstance(String param1, String param2) {
-//        RecommendDetailsFragment fragment = new RecommendDetailsFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
-
+    public void setRecommend(Recommend recommend) {
+        this.recommend=recommend;
+        if(title!=null){
+            update_display();
+        }
+    }
 }
