@@ -2,7 +2,6 @@ package com.example.eat_it;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,7 +57,7 @@ public class RecommendListActivity extends AppCompatActivity {
             titleTv = itemView.findViewById(R.id.row_title_tv);
             locationTv = itemView.findViewById(R.id.row_location_tv);
             descriptionTv = itemView.findViewById(R.id.row_descroption_tv);
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.row_image);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

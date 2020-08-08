@@ -3,6 +3,7 @@ package com.example.eat_it;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,6 @@ import com.example.eat_it.model.Model;
 import com.example.eat_it.model.Recommend;
 
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -74,10 +74,12 @@ public class MainActivity extends AppCompatActivity {
             TextView titleTv = convertView.findViewById(R.id.row_title_tv);
             TextView locationTv = convertView.findViewById(R.id.row_location_tv);
             TextView descriptionTv = convertView.findViewById(R.id.row_descroption_tv);
-            ImageView imageView = convertView.findViewById(R.id.imageView);
+            ImageView imageView = convertView.findViewById(R.id.row_image);
+
             titleTv.setText(recommend.title);
             locationTv.setText(recommend.location);
             descriptionTv.setText(recommend.description);
+            imageView.setImageURI(Uri.parse(recommend.avatar));
             return convertView;
         }
     }
