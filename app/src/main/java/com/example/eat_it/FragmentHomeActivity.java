@@ -28,7 +28,8 @@ public class FragmentHomeActivity extends AppCompatActivity implements RecListFr
         RecommendDetailsFragment recommendDetailsFragment = new RecommendDetailsFragment();
         recommendDetailsFragment.setRecommend(recommend);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.home_fragment_container, recommendDetailsFragment, "TAG");
+        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        transaction.replace(R.id.home_fragment_container, recommendDetailsFragment, "TAG");
         transaction.addToBackStack("TAG");
         transaction.commit();
     }

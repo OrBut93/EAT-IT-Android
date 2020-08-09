@@ -63,7 +63,7 @@ public class RecListFragment extends Fragment {
         RecListAdapter adapter = new RecListAdapter();
         list.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new RecommendListActivity.OnItemClickListener() {
+        adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onClick(int position) {
                 Log.d("TAG", "ROW WAS CLICKED"+ position);
@@ -90,7 +90,7 @@ public class RecListFragment extends Fragment {
         Recommend recommend;
 
 
-        public RecommendViewHolder(@NonNull View itemView, final RecommendListActivity.OnItemClickListener listener) {
+        public RecommendViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             idTv = itemView.findViewById(R.id.row_id);
             titleTv = itemView.findViewById(R.id.row_title_tv);
@@ -124,25 +124,25 @@ public class RecListFragment extends Fragment {
         void onClick(int position);
     }
 
-    class RecListAdapter extends RecyclerView.Adapter<RecommendListActivity.RecommendViewHolder>{
-        private RecommendListActivity.OnItemClickListener listener;
+    class RecListAdapter extends RecyclerView.Adapter<RecommendViewHolder>{
+        private OnItemClickListener listener;
 
-        void setOnItemClickListener(RecommendListActivity.OnItemClickListener listener){
+        void setOnItemClickListener(OnItemClickListener listener){
             this.listener = listener;
         }
 
         @NonNull
         @Override
         // what happen when create a view of row
-        public RecommendListActivity.RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        public RecommendViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
             View view= LayoutInflater.from(getActivity()).inflate(R.layout.list_row, viewGroup, false);
-            RecommendListActivity.RecommendViewHolder viewHolder = new RecommendListActivity.RecommendViewHolder(view,listener);
+            RecommendViewHolder viewHolder = new RecommendViewHolder(view,listener);
             return viewHolder;
         }
 
         //take a row and connect her data
         @Override
-        public void onBindViewHolder(@NonNull RecommendListActivity.RecommendViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull RecommendViewHolder holder, int position) {
             Recommend recommend = data.get(position);
             holder.bind(recommend);
         }
