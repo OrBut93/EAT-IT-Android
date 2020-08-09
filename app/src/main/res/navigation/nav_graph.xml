@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/recListFragment"
         android:name="com.example.eat_it.RecListFragment"
-        android:label="Recommend"
-        tools:layout="@layout/fragment_rec_list" >
+        android:label="Recommends"
+        tools:layout="@layout/fragment_rec_list">
         <action
             android:id="@+id/action_recListFragment_to_recommendDetailsFragment2"
             app:destination="@id/recommendDetailsFragment" />
@@ -22,5 +22,20 @@
         <argument
             android:name="recommend"
             app:argType="com.example.eat_it.model.Recommend" />
-    </fragment>
+    </fragment><action android:id="@+id/action_global_recommendDetailsFragment" app:destination="@id/recommendDetailsFragment"/>
+    <fragment
+        android:id="@+id/addRecFragment"
+        android:name="com.example.eat_it.AddRecFragment"
+        android:label="Add"
+        tools:layout="@layout/fragment_add_rec" />
+    <fragment
+        android:id="@+id/proileFragment"
+        android:name="com.example.eat_it.ProileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_proile" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.eat_it.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
 </navigation>
