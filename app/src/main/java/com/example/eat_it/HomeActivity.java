@@ -1,14 +1,19 @@
 package com.example.eat_it;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.eat_it.model.DatePickerFragment;
 import com.example.eat_it.model.Recommend;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,11 +36,32 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                navCtrl.navigateUp();
+                return true;
+            case R.id.menu_recommends_list_add:
+                Log.d("TAG","add menu selected");
+                return true;
+
+
+        }
+
         if (item.getItemId() == android.R.id.home){
             navCtrl.navigateUp();
             return true;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        return true;
     }
 
     @Override

@@ -7,4 +7,9 @@
         android:icon="@android:drawable/ic_input_add"
         android:title="Add_Rec"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/menu_rec_list_Info"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="Info"
+        app:showAsAction="ifRoom" />
 </menu>
