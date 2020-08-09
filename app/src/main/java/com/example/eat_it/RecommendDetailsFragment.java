@@ -3,6 +3,8 @@ package com.example.eat_it;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +36,20 @@ public class RecommendDetailsFragment extends Fragment {
         location = view.findViewById(R.id.rec_details_location);
         description = view.findViewById(R.id.rec_details_description);
 
+        recommend = RecommendDetailsFragmentArgs.fromBundle(getArguments()).getRecommend();
+
         if (recommend!=null){
             update_display();
         }
+
+        View closeBtn = view.findViewById(R.id.rec_details_close_btn);
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NavController navCtrl = Navigation.findNavController(v);
+                navCtrl.popBackStack();
+            }
+        });
         return view;
     }
 
@@ -51,10 +64,10 @@ public class RecommendDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setRecommend(Recommend recommend) {
-        this.recommend=recommend;
-        if(title!=null){
-            update_display();
-        }
-    }
+//    public void setRecommend(Recommend recommend) {
+//        this.recommend=recommend;
+//        if(title!=null){
+//            update_display();
+//        }
+//    }
 }

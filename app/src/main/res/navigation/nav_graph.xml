@@ -9,5 +9,18 @@
         android:id="@+id/recListFragment"
         android:name="com.example.eat_it.RecListFragment"
         android:label="Recommend"
-        tools:layout="@layout/fragment_rec_list" />
+        tools:layout="@layout/fragment_rec_list" >
+        <action
+            android:id="@+id/action_recListFragment_to_recommendDetailsFragment2"
+            app:destination="@id/recommendDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recommendDetailsFragment"
+        android:name="com.example.eat_it.RecommendDetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_recommend_details" >
+        <argument
+            android:name="recommend"
+            app:argType="com.example.eat_it.model.Recommend" />
+    </fragment>
 </navigation>

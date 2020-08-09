@@ -3,7 +3,9 @@ package com.example.eat_it.model;
 import android.media.Image;
 import android.widget.ImageView;
 
-public class Recommend {
+import java.io.Serializable;
+
+public class Recommend implements Serializable {
 
     public String id;
     public String title;
