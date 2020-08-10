@@ -7,45 +7,54 @@ import java.util.List;
 
 public class Model {
 
-//    List<Recommend> recommends = new LinkedList<>();
+    public interface Listener<T>{
+        void onComplete(T data);
+    }
 
     static public final Model instance = new Model();
+    private AsyncTask<String, String, List<Recommend>> MyTask;
 
     private Model(){
-//        for(int i=0; i<10;i++) {
-//            Recommend rc= new Recommend("id"+i, "title" + i,  "location"+i, "desc"+i, null);
-//            recommends.add(rc);
+    }
+
+    public  void getAllRecommenda(final Listener<List<Recommend>> listener){
+
+        MyTask = new AsyncTask<String,String,List<Recommend>>(){
+
+            @Override
+            protected List<Recommend> doInBackground(String... strings) {
+                return AppLocalDb.db.recommendDao().getAll();
+            }
+
+            @Override
+            protected void onPostExecute(List<Recommend> recommends) {
+                super.onPostExecute(recommends);
+                listener.onComplete(recommends);
+            }
+        };
+
+        MyTask.execute();
+//        class MyAsynchTask extends AsyncTask<String,String,String>
+//        {
+//            List<Recommend> data;
+//            @Override
+//            protected String doInBackground(String... strings) {
+////                for(int i=0; i<10;i++) {
+////                    AppLocalDb.db.recommendDao().insertAll(new Recommend("id"+i, "title" + i,  "location"+i, "desc"+i, null));
+////                }
+//                data = AppLocalDb.db.recommendDao().getAll();
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                listener.onComplete(data);
+//            }
 //        }
-    }
+//
+//        MyAsynchTask task = new MyAsynchTask();
 
-    public interface GetAllRecommendsListener{
-        void onComplete(List<Recommend> data);
-    }
-
-
-    public  void getAllRecommenda(final GetAllRecommendsListener listener){
-
-        class MyAsynchTask extends AsyncTask<String,String,String>
-        {
-            List<Recommend> data;
-            @Override
-            protected String doInBackground(String... strings) {
-//                for(int i=0; i<10;i++) {
-//                    AppLocalDb.db.recommendDao().insertAll(new Recommend("id"+i, "title" + i,  "location"+i, "desc"+i, null));
-//                }
-                data = AppLocalDb.db.recommendDao().getAll();
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                listener.onComplete(data);
-            }
-        }
-
-        MyAsynchTask task = new MyAsynchTask();
-        task.execute();
     }
 
 

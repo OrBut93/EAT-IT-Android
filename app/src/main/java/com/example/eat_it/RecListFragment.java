@@ -43,14 +43,13 @@ public class RecListFragment extends Fragment {
     Delegate parent;
 
     public RecListFragment() {
-        Model.instance.getAllRecommenda(new Model.GetAllRecommendsListener() {
+        Model.instance.getAllRecommenda(new Model.Listener<List<Recommend>>() {
             @Override
             public void onComplete(List<Recommend> _data) {
                 data= _data;
                 if(adapter!=null){
                     adapter.notifyDataSetChanged();
                 }
-
             }
         });
     }
@@ -87,7 +86,6 @@ public class RecListFragment extends Fragment {
                 parent.onItemSelected(recommend);
             }
         });
-
         return view;
     }
 
@@ -104,7 +102,6 @@ public class RecListFragment extends Fragment {
         TextView descriptionTv;
         ImageView imageView;
         Recommend recommend;
-
 
         public RecommendViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -123,7 +120,6 @@ public class RecListFragment extends Fragment {
                             listener.onClick(position);
                         }
                     }
-
                 }
             });
         }
@@ -168,5 +164,4 @@ public class RecListFragment extends Fragment {
             return data.size();
         }
     }
-
 }
