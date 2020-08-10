@@ -18,7 +18,6 @@ import com.example.eat_it.model.Recommend;
  * Use the {@link RecommendDetailsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
- //comment
 public class RecommendDetailsFragment extends Fragment {
 
     private Recommend recommend;
