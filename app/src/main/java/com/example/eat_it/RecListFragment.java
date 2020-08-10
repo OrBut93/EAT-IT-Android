@@ -31,6 +31,7 @@ import java.util.List;
  * Use the {@link RecListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class RecListFragment extends Fragment {
 
     RecListAdapter adapter;

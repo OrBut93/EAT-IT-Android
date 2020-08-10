@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -44,6 +45,8 @@ dependencies {
     def nav_version = "2.3.0-alpha06"
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"
-
+    implementation "com.google.firebase:firebase-auth:19.3.2"
+    implementation "com.google.firebase:firebase-firestore:21.5.0"
+    implementation "com.google.firebase:firebase-storage:19.1.1"
 
 }
