@@ -10,11 +10,12 @@ public class Model {
     public interface Listener<T>{
         void onComplete(T data);
     }
-
+    ModelFirebase modelFirebase;
     static public final Model instance = new Model();
     private AsyncTask<String, String, List<Recommend>> MyTask;
 
     private Model(){
+        modelFirebase= new ModelFirebase();
     }
 
     public  void getAllRecommenda(final Listener<List<Recommend>> listener){
