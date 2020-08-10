@@ -3,11 +3,19 @@ package com.example.eat_it.model;
 import android.media.Image;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 
+@Entity
 public class Recommend implements Serializable {
-
+    @PrimaryKey
+    @NonNull
     public String id;
+    public String Ownerid;
+    public String OwenrName;
     public String title;
     public String location;
     public String description;
