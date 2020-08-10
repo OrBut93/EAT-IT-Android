@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.eat_it.model.Model;
 import com.example.eat_it.model.Recommend;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,8 +33,9 @@ import java.util.List;
  */
 public class RecListFragment extends Fragment {
 
+    RecListAdapter adapter;
     RecyclerView list;
-    List<Recommend> data;
+    List<Recommend> data = new LinkedList<Recommend>();
 
     interface Delegate{
         void onItemSelected(Recommend recommend);
@@ -41,7 +43,16 @@ public class RecListFragment extends Fragment {
     Delegate parent;
 
     public RecListFragment() {
-        data= Model.instance.getAllRec();
+        Model.instance.getAllRecommenda(new Model.GetAllRecommendsListener() {
+            @Override
+            public void onComplete(List<Recommend> _data) {
+                data= _data;
+                if(adapter!=null){
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+        });
     }
 
     @Override
@@ -65,7 +76,7 @@ public class RecListFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(layoutManager);
 
-        RecListAdapter adapter = new RecListAdapter();
+        adapter = new RecListAdapter();
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new OnItemClickListener() {

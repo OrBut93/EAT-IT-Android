@@ -8,7 +8,7 @@ import com.example.eat_it.MyApplication;
 
 @Database(entities = {Recommend.class}, version = 1)
 abstract class AppLocalDbRepository extends RoomDatabase {
-    public abstract RecommendDao studentDao();
+    public abstract RecommendDao recommendDao();
 }
 public class AppLocalDb{
     static public AppLocalDbRepository db =
