@@ -5,8 +5,8 @@
         android:id="@id/recListFragment"
         android:title="Home" />
     <item
-        android:id="@+id/aboutFragment"
-        android:title="About" />
+        android:id="@+id/addRecFragment"
+        android:title="Add" />
     <item
         android:id="@id/proileFragment"
         android:title="Profile" />

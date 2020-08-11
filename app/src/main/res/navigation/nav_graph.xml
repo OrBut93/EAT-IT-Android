@@ -33,9 +33,5 @@
         android:name="com.example.eat_it.ProileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_proile" />
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.example.eat_it.AboutFragment"
-        android:label="About"
-        tools:layout="@layout/fragment_about" /><action android:id="@+id/action_global_addRecFragment" app:destination="@id/addRecFragment"/>
+    <action android:id="@+id/action_global_addRecFragment" app:destination="@id/addRecFragment" />
 </navigation>

@@ -2,8 +2,10 @@ package com.example.eat_it;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity implements RecListFragment.Delegate {
 
+    RecyclerView list;
     NavController navCtrl;
 
     @Override
@@ -51,21 +54,11 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        switch(item.getItemId()){
             case android.R.id.home:
                 navCtrl.navigateUp();
                 return true;
-            case R.id.menu_recommends_list_add:
-                Log.d("TAG","add menu selected");
-                return true;
         }
-
-//        if (item.getItemId() == android.R.id.home){
-//            navCtrl.navigateUp();
-//            return true;
-//
-//        }
-
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 }

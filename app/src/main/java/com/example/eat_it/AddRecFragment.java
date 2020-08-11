@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +25,7 @@ public class AddRecFragment extends Fragment {
     }
 
     View view;
-
+    ImageView imageView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class AddRecFragment extends Fragment {
                 takePhoto();
             }
         });
+        imageView= view.findViewById(R.id.new_rec_image);
 
         return view;
 
@@ -56,7 +58,7 @@ public class AddRecFragment extends Fragment {
                 resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            imageView.setImageBitmap(imageBitmap);
+            imageView.setImageBitmap(imageBitmap);
         }
     }
 
