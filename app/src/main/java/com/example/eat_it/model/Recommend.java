@@ -29,4 +29,8 @@ public class Recommend implements Serializable {
         this.avatar = avatar;
     }
 
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
 }

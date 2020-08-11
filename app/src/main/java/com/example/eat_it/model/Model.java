@@ -7,11 +7,13 @@ import java.util.List;
 
 public class Model {
 
+    ModelFirebase modelFirebase;
+
     public interface Listener<T>{
         void onComplete(T data);
     }
-    ModelFirebase modelFirebase;
-    static public final Model instance = new Model();
+
+//    static public final Model instance = new Model();
     private AsyncTask<String, String, List<Recommend>> MyTask;
 
     private Model(){
@@ -73,7 +75,8 @@ public class Model {
     }
 
 
-    void addRec(Recommend recommend) {
+    void addRec(Recommend recommend,Listener<Boolean> listener) {
+        modelFirebase.addRecommend(recommend,listener);
     }
 
 

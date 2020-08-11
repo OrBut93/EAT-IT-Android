@@ -1,36 +1,40 @@
 package com.example.eat_it.model;
 
-
 import android.util.Log;
-
 import androidx.annotation.NonNull;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ModelFirebase {
 
-    public ModelFirebase(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
+    final Map<String, Object> recommend;
 
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
+    public ModelFirebase(){
+        db = FirebaseFirestore.getInstance();
+        recommend = new HashMap<>();
+
+        recommend.put("first", "Ada");
+        recommend.put("last", "Lovelace");
+        recommend.put("born", 1815);
+    }
+
+    public void addRecommend (final Recommend recommend, Model.Listener<Boolean> listener){
 
 // Add a new document with a generated ID
-        db.collection("users")
-                .add(user)
+        db.collection("recommends")
+                .add(recommend)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        String postId = documentReference.getId();
+                        recommend.setId(postId);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -39,7 +43,6 @@ public class ModelFirebase {
                         Log.w("TAG", "Error adding document", e);
                     }
                 });
-
     }
 
     public interface GetAllRecommendsListener{
