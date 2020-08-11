@@ -40,7 +40,7 @@ public class ModelFirebase {
                         recData.add(recommend);
                     }
                 }
-                listener.onComplete(recData);
+                listener.onComplete(rData);
             }
         });
     }
