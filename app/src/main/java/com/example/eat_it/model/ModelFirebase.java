@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class ModelFirebase {
 
+	final static String RECOMMENDS_COLLECTION = "recommends";
     FirebaseFirestore db;
     final Map<String, Object> recommend;
 
@@ -44,6 +45,8 @@ public class ModelFirebase {
                     }
                 });
     }
+    
+    
 
     public interface GetAllRecommendsListener{
         void onComplete(List<Recommend> data);
