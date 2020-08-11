@@ -20,6 +20,8 @@ public class Recommend implements Serializable {
     public String location;
     public String description;
     public String avatar;
+    long lastUpdated;
+
 
     Recommend(String id,String title,String location, String description, String avatar){
         this.title= title;
@@ -47,7 +49,7 @@ public class Recommend implements Serializable {
         this.title = title;
     }
     public void setLocation(String location) {
-        this.location = tlocationitle;
+        this.location = location;
     }
     public void setDescription(String description) {
         this.description = description;
