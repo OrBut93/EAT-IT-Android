@@ -19,11 +19,11 @@ public class RecommendModel {
     public interface CompListener{
         void onComplete();
     }
-    private RecommendModel(){
+    public RecommendModel(){
         modelFirebase= new RecommendFirebase();
     }
 
-    void addRec(Recommend recommend,Listener<Boolean> listener) {
+    public void addRec(Recommend recommend,Listener<Boolean> listener) {
         modelFirebase.addRecommend(recommend,listener);
     }
 
