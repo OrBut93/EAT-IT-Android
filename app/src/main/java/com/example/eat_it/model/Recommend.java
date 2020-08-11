@@ -83,5 +83,13 @@ public class Recommend implements Serializable {
         return avatar;
     }
     
+    public void setLastUpdated(long lastUpdated) {
+        this.lastUpdated = lastUpdated;
+    }
+
+    public long getLastUpdated() {
+        return lastUpdated;
+    }
+    
 
 }
