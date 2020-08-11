@@ -44,15 +44,15 @@ public class RecListFragment extends Fragment {
     Delegate parent;
 
     public RecListFragment() {
-        Model.instance.getAllRecommenda(new Model.Listener<List<Recommend>>() {
-            @Override
-            public void onComplete(List<Recommend> _data) {
-                data= _data;
-                if(adapter!=null){
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        });
+//        Model.instance.getAllRecommenda(new Model.Listener<List<Recommend>>() {
+//            @Override
+//            public void onComplete(List<Recommend> _data) {
+//                data= _data;
+//                if(adapter!=null){
+//                    adapter.notifyDataSetChanged();
+//                }
+//            }
+//        });
     }
 
     @Override
