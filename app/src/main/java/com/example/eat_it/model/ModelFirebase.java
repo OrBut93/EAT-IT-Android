@@ -13,6 +13,7 @@ import java.util.Map;
 public class ModelFirebase {
 
 	final static String RECOMMENDS_COLLECTION = "recommends";
+	
     FirebaseFirestore db;
     final Map<String, Object> recommend;
 
@@ -23,6 +24,25 @@ public class ModelFirebase {
         recommend.put("first", "Ada");
         recommend.put("last", "Lovelace");
         recommend.put("born", 1815);
+    }
+    
+    
+    public static void getAllRecommends(final RecommendModel.Listener<List<Recommend>> listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(RECOMMENDS_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                List<Recommend> recData = null;
+                if (task.isSuccessful()){
+                    recData = new LinkedList<Recommend>();
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        Recommend recommend = doc.toObject(Recommend.class);
+                        recData.add(recommend);
+                    }
+                }
+                listener.onComplete(recData);
+            }
+        });
     }
 
     public void addRecommend (final Recommend recommend, Model.Listener<Boolean> listener){
