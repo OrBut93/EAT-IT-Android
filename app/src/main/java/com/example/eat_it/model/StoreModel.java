@@ -3,7 +3,6 @@ package com.example.eat_it.model;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -49,9 +48,9 @@ public class StoreModel {
 
         }
 
-        else{
-            Log.d("TAG", " error");
-        }
+//        else{
+//            Log.d("TAG", " error");
+//        }
 
     }
 }

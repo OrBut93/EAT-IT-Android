@@ -90,17 +90,25 @@ public class RecommendFirebase {
 //                });
 //    }
 
-    public static void addRecommend(Recommend recommend, final RecommendModel.Listener<Boolean> listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection(RECOMMENDS_COLLECTION).document(recommend.getId()).set(toJson(recommend)).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public static void addRecommend(final Recommend recommend, final RecommendModel.Listener<Boolean> listener) {
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(RECOMMENDS_COLLECTION).document().set(toJson(recommend)).addOnCompleteListener(new OnCompleteListener<Void>() {
+            String myID = db.collection(RECOMMENDS_COLLECTION).document().getId();
+
+
+
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (listener!=null){
                     listener.onComplete(task.isSuccessful());
+                    String myID2 = db.collection(RECOMMENDS_COLLECTION).document(task.toString()).getId();
                 }
             }
         });
+
+
     }
+
     private static Recommend factory(Map<String, Object> json){
         Recommend recommend = new Recommend((String)json.get("id"),(String)json.get("title"),(String)json.get("location"),(String)json.get("description"),(String)json.get("avatar"));
         recommend.id = (String)json.get("id");

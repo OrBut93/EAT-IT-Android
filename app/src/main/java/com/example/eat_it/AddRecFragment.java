@@ -71,9 +71,9 @@ public class AddRecFragment extends Fragment {
         return view;
     }
     void saveRecommend(){
-        String id = "";
-        String OwnerId = "";
-        String OwnerName = "";
+        String id ;
+        String OwnerId;
+        String OwnerName ;
         final String title= titleTV.getText().toString();
         final String location= locationTv.getText().toString();
         final String description= descriptionTV.getText().toString();
@@ -95,7 +95,7 @@ public class AddRecFragment extends Fragment {
 
             @Override
             public void onFail() {
-                progressbr.setVisibility(View.INVISIBLE);
+//                progressbr.setVisibility(View.INVISIBLE);
                 Snackbar mySnackbar = Snackbar.make(view,R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
                 mySnackbar.show();
             }
@@ -117,7 +117,7 @@ public class AddRecFragment extends Fragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE &&
                 resultCode == RESULT_OK) {
            Bundle extras = data.getExtras();
-           Bitmap imageBitmap = (Bitmap) extras.get("data");
+           imageBitmap = (Bitmap) extras.get("data");
            imageView.setImageBitmap(imageBitmap);
         }
     }
