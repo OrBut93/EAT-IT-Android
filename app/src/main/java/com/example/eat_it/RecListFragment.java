@@ -39,7 +39,8 @@ public class RecListFragment extends Fragment {
     RecommendListViewModel viewModel;
     LiveData<List<Recommend>> liveData;
 
-    Boolean isRefreshing = false;
+//    Boolean isRefreshing = false;
+    SwipeRefreshLayout swipeRefresh;
     
     interface Delegate{
         void onItemSelected(Recommend recommend);
@@ -69,6 +70,7 @@ public class RecListFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         viewModel = new ViewModelProvider(this).get(RecommendListViewModel.class);
+        
     }
 
     @Override
@@ -93,15 +95,9 @@ public class RecListFragment extends Fragment {
                 parent.onItemSelected(recommend);
             }
         });
-        liveData = viewModel.getData();
-        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
-            @Override
-            public void onChanged(List<Recommend> recommends) {
-                data = recommends;
-                adapter.notifyDataSetChanged();
-            }
-        });
-        final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
+       
+        
+        swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -111,6 +107,19 @@ public class RecListFragment extends Fragment {
                         swipeRefresh.setRefreshing(false);
                     }
                 });
+            }
+        });
+        swipeRefresh.setRefreshing(true);
+        
+        //Live data is getting from localDb
+        liveData = viewModel.getData();
+        
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
+            @Override
+            public void onChanged(List<Recommend> recommends) {
+                data = recommends;
+                adapter.notifyDataSetChanged();
+                swipeRefresh.setRefreshing(false);
             }
         });
 
