@@ -37,6 +37,8 @@ public class RecListFragment extends Fragment {
     RecommendListViewModel viewModel;
     LiveData<List<Recommend>> liveData;
 
+    Boolean isRefreshing = false;
+    
     interface Delegate{
         void onItemSelected(Recommend recommend);
     }
