@@ -2,11 +2,19 @@ package com.example.eat_it.model;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.android.gms.tasks.Task;
+
+
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +35,10 @@ public class ModelFirebase {
     }
     
     
-    public static void getAllRecommends(final RecommendModel.Listener<List<Recommend>> listener) {
+    public static void getAllRecommends(final Model.Listener<List<Recommend>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(RECOMMENDS_COLLECTION).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
+
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<Recommend> recData = null;
                 if (task.isSuccessful()){
@@ -40,7 +48,7 @@ public class ModelFirebase {
                         recData.add(recommend);
                     }
                 }
-                listener.onComplete(rData);
+                listener.onComplete(recData);
             }
         });
     }
