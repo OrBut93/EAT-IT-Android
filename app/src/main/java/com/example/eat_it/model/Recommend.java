@@ -30,6 +30,8 @@ public class Recommend implements Serializable {
         this.description= description;
         this.avatar = avatar;
     }
+//    public Recommend() {
+//    }
     
     ///////set
 

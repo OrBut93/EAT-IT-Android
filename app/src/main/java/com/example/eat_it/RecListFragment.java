@@ -5,22 +5,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.eat_it.model.Model;
 import com.example.eat_it.model.Recommend;
 
 import java.util.LinkedList;
@@ -37,10 +34,13 @@ public class RecListFragment extends Fragment {
     RecListAdapter adapter;
     RecyclerView list;
     List<Recommend> data = new LinkedList<Recommend>();
+    RecommendListViewModel viewModel;
+    LiveData<List<Recommend>> liveData;
 
     interface Delegate{
         void onItemSelected(Recommend recommend);
     }
+
     Delegate parent;
 
     public RecListFragment() {
@@ -63,6 +63,8 @@ public class RecListFragment extends Fragment {
         } else{
             throw new RuntimeException(context.toString() + "must implement Delegate");
         }
+        setHasOptionsMenu(true);
+        viewModel = new ViewModelProvider(this).get(RecommendListViewModel.class);
     }
 
     @Override
@@ -70,9 +72,9 @@ public class RecListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rec_list, container, false);
-
         list = view.findViewById(R.id.recommend_list_list);
         list.setHasFixedSize(true);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(layoutManager);
 
@@ -87,6 +89,27 @@ public class RecListFragment extends Fragment {
                 parent.onItemSelected(recommend);
             }
         });
+        liveData = viewModel.getData();
+        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
+            @Override
+            public void onChanged(List<Recommend> recommends) {
+                data = recommends;
+                adapter.notifyDataSetChanged();
+            }
+        });
+//        final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
+//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                viewModel.refresh(new Model().CompListener() {
+//                    @Override
+//                    public void onComplete() {
+//                        swipeRefresh.setRefreshing(false);
+//                    }
+//                });
+//            }
+//        });
+
         return view;
     }
 

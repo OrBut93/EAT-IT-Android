@@ -13,50 +13,21 @@ import android.view.MenuItem;
 import com.example.eat_it.model.Recommend;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class HomeActivity extends AppCompatActivity implements RecListFragment.Delegate{
+public class HomeActivity extends AppCompatActivity implements RecListFragment.Delegate {
 
     NavController navCtrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         navCtrl = Navigation.findNavController(this, R.id.home_nav_host);
-        NavigationUI.setupActionBarWithNavController(this,navCtrl);
+        NavigationUI.setupActionBarWithNavController(this, navCtrl);
 
         BottomNavigationView bottonNav = findViewById(R.id.home_bottom_nav);
         NavigationUI.setupWithNavController(bottonNav, navCtrl);
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                navCtrl.navigateUp();
-                return true;
-            case R.id.menu_recommends_list_add:
-                Log.d("TAG","add menu selected");
-                return true;
-
-
-        }
-
-        if (item.getItemId() == android.R.id.home){
-            navCtrl.navigateUp();
-            return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
-        return true;
     }
 
     @Override
@@ -68,7 +39,34 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
 
         NavGraphDirections.ActionGlobalRecommendDetailsFragment directions = RecListFragmentDirections.actionGlobalRecommendDetailsFragment(recommend);
         navCtrl.navigate(directions);
-
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+//        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                navCtrl.navigateUp();
+                return true;
+//            case R.id.menu_recommends_list_add:
+//                Log.d("TAG","add menu selected");
+//                return true;
+//
+//
+//        }
+//
+//        if (item.getItemId() == android.R.id.home){
+//            navCtrl.navigateUp();
+//            return true;
+//
+//        }
+        }
+            return super.onOptionsItemSelected(item);
+        }
 }

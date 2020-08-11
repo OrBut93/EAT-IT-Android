@@ -1,6 +1,7 @@
 package com.example.eat_it.model;
 
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,7 +14,7 @@ import java.util.List;
 interface RecommendDao {
 
     @Query("select * from Recommend")
-    List<Recommend> getAll();
+    LiveData<List<Recommend>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recommend... recommends);

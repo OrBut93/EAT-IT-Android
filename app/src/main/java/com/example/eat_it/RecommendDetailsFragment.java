@@ -26,6 +26,7 @@ public class RecommendDetailsFragment extends Fragment {
     TextView location;
     TextView description;
     TextView avatar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
