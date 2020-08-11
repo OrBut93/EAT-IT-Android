@@ -58,7 +58,7 @@ public class AddRecFragment extends Fragment {
                 resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+           imageView.setImageBitmap(imageBitmap);
         }
     }
 
