@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
+import com.example.eat_it.model.RecommendModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -99,18 +101,18 @@ public class RecListFragment extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
-//        final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
-//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                viewModel.refresh(new Model().CompListener() {
-//                    @Override
-//                    public void onComplete() {
-//                        swipeRefresh.setRefreshing(false);
-//                    }
-//                });
-//            }
-//        });
+        final SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.students_list_swipe_refresh);
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                viewModel.refresh(new RecommendModel.CompListener() {
+                    @Override
+                    public void onComplete() {
+                        swipeRefresh.setRefreshing(false);
+                    }
+                });
+            }
+        });
 
         return view;
     }
