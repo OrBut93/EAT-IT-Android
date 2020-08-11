@@ -60,6 +60,7 @@ public class RecListFragment extends Fragment {
 //        });
     }
 
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);

@@ -33,6 +33,7 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
     @Override
     public void onItemSelected(Recommend recommend) {
         NavController navCtrl = Navigation.findNavController(this, R.id.home_nav_host);
+
 //        navCtrl.navigate(R.id.action_recListFragment_to_recommendDetailsFragment);
 //        RecListFragmentDirections.ActionRecListFragmentToRecommendDetailsFragment2 directions = RecListFragmentDirections.actionRecListFragmentToRecommendDetailsFragment2(recommend);
 //        navCtrl.navigate(directions);
@@ -54,19 +55,17 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
             case android.R.id.home:
                 navCtrl.navigateUp();
                 return true;
-//            case R.id.menu_recommends_list_add:
-//                Log.d("TAG","add menu selected");
-//                return true;
-//
-//
-//        }
-//
+            case R.id.menu_recommends_list_add:
+                Log.d("TAG","add menu selected");
+                return true;
+        }
+
 //        if (item.getItemId() == android.R.id.home){
 //            navCtrl.navigateUp();
 //            return true;
 //
 //        }
-        }
+
             return super.onOptionsItemSelected(item);
         }
 }
