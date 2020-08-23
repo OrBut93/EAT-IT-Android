@@ -4,11 +4,14 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Task;
+import com.google.firestore.v1.Document;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,9 +96,6 @@ public class RecommendFirebase {
     public static void addRecommend(final Recommend recommend, final RecommendModel.Listener<Boolean> listener) {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection(RECOMMENDS_COLLECTION).document().set(toJson(recommend)).addOnCompleteListener(new OnCompleteListener<Void>() {
-            String myID = db.collection(RECOMMENDS_COLLECTION).document().getId();
-
-
 
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -105,8 +105,6 @@ public class RecommendFirebase {
                 }
             }
         });
-
-
     }
 
     private static Recommend factory(Map<String, Object> json){

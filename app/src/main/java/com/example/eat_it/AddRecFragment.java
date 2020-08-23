@@ -21,6 +21,8 @@ import com.example.eat_it.model.StoreModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Document;
+
 import java.util.Date;
 
 /**
@@ -71,7 +73,7 @@ public class AddRecFragment extends Fragment {
         return view;
     }
     void saveRecommend(){
-        String id ;
+        final String id ;
         String OwnerId;
         String OwnerName ;
         final String title= titleTV.getText().toString();
@@ -81,7 +83,7 @@ public class AddRecFragment extends Fragment {
         Date date = new Date();
         StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
             @Override
-            public void onSuccess(String url) {
+            public void onSuccess(final String url) {
                 Log.d("TAG","url: " + url);
                 Recommend recommend = new Recommend("",title, location,description, url);
                 RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {

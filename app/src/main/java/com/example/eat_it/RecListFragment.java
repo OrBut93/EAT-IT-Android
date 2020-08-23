@@ -14,7 +14,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,9 +24,11 @@ import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
 import com.example.eat_it.model.RecommendModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
 import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,7 +89,6 @@ public class RecListFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         viewModel = new ViewModelProvider(this).get(RecommendListViewModel.class);
-        
     }
 
     @Override
@@ -184,6 +184,11 @@ public class RecListFragment extends Fragment {
             titleTv.setText(recommend.title);
             locationTv.setText(recommend.location);
             descriptionTv.setText(recommend.description);
+            if(recommend.avatar !=null && recommend.avatar!= "" ){
+                Picasso.get().load(recommend.avatar).placeholder(R.drawable.avatar).into(imageView);
+            } else{
+                imageView.setImageResource(R.drawable.avatar);
+            }
         }
     }
 

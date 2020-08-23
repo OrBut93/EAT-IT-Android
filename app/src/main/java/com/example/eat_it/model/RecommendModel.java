@@ -25,6 +25,7 @@ public class RecommendModel {
 
     public void addRec(Recommend recommend,Listener<Boolean> listener) {
         modelFirebase.addRecommend(recommend,listener);
+        AppLocalDb.db.recommendDao().insertAll(recommend);
     }
 
     public void refreshStudentList(final CompListener listener){
