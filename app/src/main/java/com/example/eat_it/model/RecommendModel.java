@@ -28,7 +28,7 @@ public class RecommendModel {
         AppLocalDb.db.recommendDao().insertAll(recommend);
     }
 
-    public void refreshStudentList(final CompListener listener){
+    public void refreshRecommendList(final CompListener listener){
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("RecommendsLastUpdateDate",0);
         modelFirebase.getAllRecommendsSince(lastUpdated,new Listener<List<Recommend>>() {
             @SuppressLint("StaticFieldLeak")
@@ -59,7 +59,7 @@ public class RecommendModel {
 
     public LiveData<List<Recommend>> getAllRecommends(){
         LiveData<List<Recommend>> liveData = (LiveData<List<Recommend>>) AppLocalDb.db.recommendDao().getAll();
-        refreshStudentList(null);
+        refreshRecommendList(null);
         return liveData;
     }
 

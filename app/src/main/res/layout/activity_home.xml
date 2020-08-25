@@ -20,6 +20,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="390dp"
         android:layout_height="633dp"
+        android:layout_marginBottom="32dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/home_bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"

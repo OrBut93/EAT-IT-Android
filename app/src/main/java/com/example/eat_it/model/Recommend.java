@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Recommend implements Serializable {
     @PrimaryKey
     @NonNull
-    public String id;
+    public String id = "";
     public String Ownerid;
     public String OwenrName;
     public String title;
@@ -32,7 +32,7 @@ public class Recommend implements Serializable {
     }
 //    public Recommend() {
 //    }
-    
+
     ///////set
 
     public void setId(@NonNull String id) {
@@ -46,7 +46,7 @@ public class Recommend implements Serializable {
     public void setOwenrName(String OwenrName) {
         this.OwenrName = OwenrName;
     }
-    
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -59,7 +59,7 @@ public class Recommend implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
+
 ///// get
 
     @NonNull
@@ -86,7 +86,7 @@ public class Recommend implements Serializable {
     public String getAvatar() {
         return avatar;
     }
-    
+
     public void setLastUpdated(long lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
@@ -94,6 +94,6 @@ public class Recommend implements Serializable {
     public long getLastUpdated() {
         return lastUpdated;
     }
-    
+
 
 }

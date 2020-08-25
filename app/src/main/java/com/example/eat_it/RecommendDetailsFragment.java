@@ -9,9 +9,11 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,7 +27,7 @@ public class RecommendDetailsFragment extends Fragment {
     TextView title;
     TextView location;
     TextView description;
-    TextView avatar;
+    ImageView imageUrl;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +38,7 @@ public class RecommendDetailsFragment extends Fragment {
         title= view.findViewById(R.id.rec_details_title);
         location = view.findViewById(R.id.rec_details_location);
         description = view.findViewById(R.id.rec_details_description);
+        imageUrl = view.findViewById(R.id.rec_details_image);
 
         recommend = RecommendDetailsFragmentArgs.fromBundle(getArguments()).getRecommend();
 
@@ -59,6 +62,11 @@ public class RecommendDetailsFragment extends Fragment {
         title.setText(recommend.title);
         location.setText(recommend.location);
         description.setText(recommend.description);
+        if (recommend.avatar != null && !recommend.avatar.isEmpty())
+            Picasso.get().load(recommend.avatar).placeholder(R.drawable.avatar).into(imageUrl);
+        else
+            imageUrl.setImageResource(R.drawable.avatar);
+
     }
 
     public RecommendDetailsFragment() {

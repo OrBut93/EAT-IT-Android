@@ -7,9 +7,10 @@
     tools:context=".RecListFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/students_list_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/students_list_swipe_refresh">
+        android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recommend_list_list"
             android:layout_width="match_parent"

@@ -21,6 +21,6 @@ public class RecommendListViewModel extends ViewModel {
     }
 
     public void refresh(RecommendModel.CompListener listener) {
-        RecommendModel.instance.refreshStudentList(listener);
+        RecommendModel.instance.refreshRecommendList(listener);
     }
 }
