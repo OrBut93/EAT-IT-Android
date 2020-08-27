@@ -3,7 +3,6 @@ package com.example.eat_it.model;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
