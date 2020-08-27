@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class Recommend implements Serializable {
     @PrimaryKey
     @NonNull
-    public String id = "";
+    public String id ;
     public String Ownerid;
     public String OwenrName;
     public String title;

@@ -2,6 +2,7 @@ package com.example.eat_it;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import static android.app.Activity.RESULT_OK;
 import androidx.fragment.app.Fragment;
@@ -20,9 +21,7 @@ import com.example.eat_it.model.RecommendModel;
 import com.example.eat_it.model.StoreModel;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-
 import org.w3c.dom.Document;
-
 import java.util.Date;
 
 /**
@@ -119,10 +118,16 @@ public class AddRecFragment extends Fragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE &&
                 resultCode == RESULT_OK) {
            Bundle extras = data.getExtras();
-           imageBitmap = (Bitmap) extras.get("data");
+           imageBitmap = ((Bitmap) extras.get("data"));
            imageView.setImageBitmap(imageBitmap);
         }
     }
+
+//    public static Bitmap rotateImage(Bitmap source) {
+//        Matrix matrix = new Matrix();
+//        matrix.postRotate(90);
+//        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+//    }
 
 
 }
