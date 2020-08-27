@@ -47,10 +47,5 @@ public class StoreModel {
             });
 
         }
-
-//        else{
-//            Log.d("TAG", " error");
-//        }
-
     }
 }

@@ -84,7 +84,7 @@ public class AddRecFragment extends Fragment {
             @Override
             public void onSuccess(final String url) {
                 Log.d("TAG","url: " + url);
-                Recommend recommend = new Recommend("",title, location,description, url);
+                Recommend recommend = new Recommend("", "", title, location,description, url);
                 RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {

@@ -23,17 +23,31 @@ public class Recommend implements Serializable {
     long lastUpdated;
 
 
-    public Recommend(String id, String title, String location, String description, String avatar){
-        this.title= title;
-        this.id = id;
-        this.location= location;
-        this.description= description;
-        this.avatar = avatar;
+    public Recommend(String ownerId, String ownerName, String title, String location, String description, String avatar) {
+        this.Ownerid = ownerId;
+        this.OwenrName = ownerName;
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.avatar= avatar;
     }
-//    public Recommend() {
-//    }
 
-    ///////set
+    public Recommend(String id, String ownerId, String ownerName, String title, String location, String description, String avatar) {
+        this.id = id;
+        this.Ownerid = ownerId;
+        this.OwenrName = ownerName;
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.avatar= avatar;
+
+    }
+
+
+    public Recommend() {
+    }
+
+    /////set
 
     public void setId(@NonNull String id) {
         this.id = id;
