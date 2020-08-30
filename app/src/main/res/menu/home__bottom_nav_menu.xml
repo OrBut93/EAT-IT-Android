@@ -8,6 +8,6 @@
         android:id="@+id/addRecFragment"
         android:title="Add" />
     <item
-        android:id="@id/proileFragment"
+        android:id="@id/profileFragment"
         android:title="Profile" />
 </menu>

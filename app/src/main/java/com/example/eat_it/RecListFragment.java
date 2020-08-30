@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +18,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
 import com.example.eat_it.model.RecommendModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -46,7 +47,7 @@ public class RecListFragment extends Fragment {
 
 //    Boolean isRefreshing = false;
     SwipeRefreshLayout swipeRefresh;
-    
+
     interface Delegate{
         void onItemSelected(Recommend recommend);
     }
@@ -65,19 +66,19 @@ public class RecListFragment extends Fragment {
 //        });
     }
 
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(list);
+
         switch (item.getItemId()){
-            case R.id.action_global_addRecFragment:
-                Log.d("TAG","fragment handle add menu");
-                NavController navCtrl = Navigation.findNavController(list);
-                NavDirections directions = AddRecFragmentDirections.actionGlobalAddRecFragment();
-                navCtrl.navigate(directions);
+            case R.id.login_now_button:
+                Log.d("TAG","fragment handle login menu");
+                navController.navigate(R.id.action_global_loginFragment);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -96,6 +97,13 @@ public class RecListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rec_list, container, false);
+
+//        if(fauth.getCurrentUser() !=null)
+//        {
+////         Button log = view.findViewById(R.id.login_now_button);
+////         log.setVisibility();
+//        }
+//
         list = view.findViewById(R.id.recommend_list_list);
         list.setHasFixedSize(true);
 

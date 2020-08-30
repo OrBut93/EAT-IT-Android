@@ -4,8 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECE6E6"
-    android:backgroundTint="#C8C3C3"
     tools:context=".AddRecFragment">
 
     <EditText

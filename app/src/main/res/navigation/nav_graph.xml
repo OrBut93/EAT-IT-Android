@@ -29,9 +29,23 @@
         android:label="Add"
         tools:layout="@layout/fragment_add_rec" />
     <fragment
-        android:id="@+id/proileFragment"
-        android:name="com.example.eat_it.ProileFragment"
+        android:id="@+id/profileFragment"
+        android:name="com.example.eat_it.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/fragment_proile" />
+        tools:layout="@layout/fragment_profile" />
     <action android:id="@+id/action_global_addRecFragment" app:destination="@id/addRecFragment" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.eat_it.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.eat_it.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
+    <action
+        android:id="@+id/action_global_registerFragment"
+        app:destination="@id/registerFragment" /><action android:id="@+id/action_global_recListFragment" app:destination="@id/recListFragment"/>
 </navigation>

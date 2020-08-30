@@ -18,13 +18,14 @@
     <fragment
         android:id="@+id/home_nav_host"
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="390dp"
-        android:layout_height="633dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="398dp"
+        android:layout_height="613dp"
+        android:layout_marginTop="51dp"
+        android:layout_marginBottom="8dp"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/home_bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.238"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />

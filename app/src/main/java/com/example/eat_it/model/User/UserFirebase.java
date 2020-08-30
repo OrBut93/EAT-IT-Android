@@ -25,8 +25,11 @@ public class UserFirebase {
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG", "1");
+
                         if (task.isSuccessful()) {
-                            updateUserProfile(user, listener);
+                            Log.d("TAG", "createUserWithEmail:success");
+//                            updateUserProfile(user, listener);
                         } else {
                             Log.w("TAG", "Failed to register user", task.getException());
                             if (listener != null) {

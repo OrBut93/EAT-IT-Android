@@ -1,5 +1,6 @@
 package com.example.eat_it;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -11,14 +12,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements RecListFragment.Delegate {
 
     RecyclerView list;
     NavController navCtrl;
+    TextView userName;
+    FirebaseAuth fauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,7 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
         NavigationUI.setupActionBarWithNavController(this, navCtrl);
 
         BottomNavigationView bottonNav = findViewById(R.id.home_bottom_nav);
+
         NavigationUI.setupWithNavController(bottonNav, navCtrl);
 
     }
@@ -45,20 +51,52 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
         navCtrl.navigate(directions);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-//        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case android.R.id.home:
-                navCtrl.navigateUp();
-                return true;
-        }
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onItemSelected(String source, Outfit outfit) {
+//        switch (source) {
+//            case "fragment_outfits_list":
+//                OutfitsListFragmentDirections.ActionOutfitsListFragmentToOutfitDetailsFragment listDirection = OutfitsListFragmentDirections.actionOutfitsListFragmentToOutfitDetailsFragment(outfit);
+//                navController.navigate(listDirection);
+//                break;
+//            case "fragment_user_profile":
+//                UserProfileFragmentDirections.ActionUserProfileFragmentToOutfitDetailsFragment profileDirection = UserProfileFragmentDirections.actionUserProfileFragmentToOutfitDetailsFragment(outfit);
+//                navController.navigate(profileDirection);
+//                break;
+//        }
+//    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.login_button:
+//                Log.d("TAG","fragment handle login menu");
+//                NavController navCtrl = Navigation.findNavController(list);
+//                NavDirections directions = AddRecFragmentDirections.actionGlobalAddRecFragment();
+//                navCtrl.navigate(directions);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch(item.getItemId()){
+//            case android.R.id.home:
+//                navCtrl.navigateUp();
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }
