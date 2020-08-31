@@ -83,7 +83,10 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //        NavController navController = Navigation.findNavController(list);
+
         switch (item.getItemId()) {
+
             case R.id.login_now_button:
                 Log.d("TAG", "fragment handle login menu");
                 navCtrl.navigate(R.id.action_global_loginFragment);
@@ -95,6 +98,10 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
                 navCtrl.navigate(R.id.action_global_recListFragment);
                 return true;
 
+        }
+        if (item.getItemId() == android.R.id.home) {
+            navCtrl.navigateUp();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
