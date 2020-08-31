@@ -130,16 +130,16 @@ public class AddRecFragment extends Fragment {
         if (requestCode == REQUEST_IMAGE_CAPTURE &&
                 resultCode == RESULT_OK) {
            Bundle extras = data.getExtras();
-           imageBitmap = ((Bitmap) extras.get("data"));
+           imageBitmap = rotateImage((Bitmap) extras.get("data"));
            imageView.setImageBitmap(imageBitmap);
         }
     }
 
-//    public static Bitmap rotateImage(Bitmap source) {
-//        Matrix matrix = new Matrix();
-//        matrix.postRotate(90);
-//        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-//    }
+    public static Bitmap rotateImage(Bitmap source) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
 
 
 }
