@@ -106,4 +106,11 @@ public class UserFirebase {
                 firUser.getEmail()
         );
     }
+
+//    public static String getUser(String id){
+//        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        return db.collection("users").document(id).getId();
+//
+//
+//    }
 }
