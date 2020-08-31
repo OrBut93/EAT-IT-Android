@@ -57,8 +57,8 @@ public class AddRecFragment extends Fragment {
 
         view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
 
-        auth = FirebaseAuth.getInstance();
-        firebaseUser = auth.getCurrentUser();
+//        auth = FirebaseAuth.getInstance();
+//        firebaseUser = auth.getCurrentUser();
 
         imageView= view.findViewById(R.id.new_rec_image);
         Button takePhotoBtn = view.findViewById(R.id.new_rec_takePhoto_btn);
@@ -96,7 +96,7 @@ public class AddRecFragment extends Fragment {
             @Override
             public void onSuccess(final String url) {
                 Log.d("TAG","url: " + url);
-                Recommend recommend = new Recommend(firebaseUser.getUid(),firebaseUser.getDisplayName(), title, location,description, url);
+                Recommend recommend = new Recommend("","", title, location,description, url);
                 RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {

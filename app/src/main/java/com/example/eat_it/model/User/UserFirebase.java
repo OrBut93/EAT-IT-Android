@@ -5,11 +5,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserFirebase {
 
@@ -21,6 +27,7 @@ public class UserFirebase {
 
     public static void register(final User user, String password, final UserModel.Listener<Boolean> listener) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
+        final FirebaseFirestore db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(user.email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -28,8 +35,21 @@ public class UserFirebase {
                         Log.d("TAG", "1");
 
                         if (task.isSuccessful()) {
-                            Log.d("TAG", "createUserWithEmail:success");
+                            Log.d("TAG", "createUserWithEmail:success"+ auth.getCurrentUser().getDisplayName());
+
 //                            updateUserProfile(user, listener);
+                            DocumentReference documentReference = db.collection("users").document(auth.getCurrentUser().getUid());
+                            Map<String,Object> userMap = new HashMap<>();
+                            user.id= auth.getCurrentUser().getUid();
+                            userMap.put("FullName", user.name);
+                            userMap.put("Email", user.email);
+                            userMap.put("id",user.id);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d("TAG", "Success add user to db" + user.id);
+                                }
+                            });
                         } else {
                             Log.w("TAG", "Failed to register user", task.getException());
                             if (listener != null) {
