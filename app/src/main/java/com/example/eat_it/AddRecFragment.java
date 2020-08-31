@@ -7,6 +7,7 @@ import android.os.Bundle;
 import static android.app.Activity.RESULT_OK;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,6 +30,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import org.w3c.dom.Document;
 import java.util.Date;
@@ -52,7 +58,6 @@ public class AddRecFragment extends Fragment {
     TextView titleTV;
     TextView locationTv;
     TextView descriptionTV;
-    FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,9 +67,6 @@ public class AddRecFragment extends Fragment {
 
         if(auth.getCurrentUser()!=null){
             view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
-
-//        auth = FirebaseAuth.getInstance();
-//        firebaseUser = auth.getCurrentUser();
 
             imageView= view.findViewById(R.id.new_rec_image);
             Button takePhotoBtn = view.findViewById(R.id.new_rec_takePhoto_btn);
@@ -97,18 +99,24 @@ public class AddRecFragment extends Fragment {
     void saveRecommend(){
         final String id ;
         String OwnerId;
-        String OwnerName ;
+        String OwnerName = "";
         final String title= titleTV.getText().toString();
         final String location= locationTv.getText().toString();
         final String description= descriptionTV.getText().toString();
-//        final User user = mViewModel.getCurrentUser();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseFirestore fb = FirebaseFirestore.getInstance();
+
+        final String userId = auth.getCurrentUser().getUid();
+
+
 
         Date date = new Date();
         StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
             @Override
             public void onSuccess(final String url) {
                 Log.d("TAG","url: " + url);
-                Recommend recommend = new Recommend("","", title, location,description, url);
+                Recommend recommend = new Recommend(userId,"", title, location,description, url);
                 RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {
