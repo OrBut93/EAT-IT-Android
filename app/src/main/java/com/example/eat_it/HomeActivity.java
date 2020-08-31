@@ -99,10 +99,7 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
                 return true;
 
         }
-        if (item.getItemId() == android.R.id.home) {
-            navCtrl.navigateUp();
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
