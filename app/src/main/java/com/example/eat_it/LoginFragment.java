@@ -30,6 +30,20 @@ public class LoginFragment extends Fragment {
                 TextView email = view.findViewById(R.id.login_user_email);
                 TextView password = view.findViewById(R.id.login_user_password);
 
+                if(email.getText().toString().isEmpty()){
+                    email.setError("Email is Require");
+                    return;
+                }
+                if(password.getText().toString().isEmpty()){
+                    password.setError("password is Require");
+                    return;
+                }
+
+                if(password.length() < 6)
+                {
+                    password.setError("Password must be more than 6 characters");
+                }
+
                 mViewModel.login(email.getText().toString(), password.getText().toString(), new UserModel.Listener<Boolean>() {
                     @Override
                     public void onComplete(Boolean data) {

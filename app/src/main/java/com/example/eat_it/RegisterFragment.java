@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
@@ -75,7 +76,9 @@ public class RegisterFragment extends Fragment {
                                 if (data) {
                                     ///// navigate to home page ?
                                     NavController navController = Navigation.findNavController(view);
-                                    navController.navigate(R.id.action_global_recListFragment);
+//                                    navController.navigate(R.id.action_global_recListFragment);
+                                    NavDirections directions = RegisterFragmentDirections.actionGlobalRecListFragment();
+                                    navController.navigate(directions);
                                 }
                             }
                         });

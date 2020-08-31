@@ -49,6 +49,7 @@ public class UserFirebase {
                         if (task.isSuccessful()) {
                             if (listener != null) {
                                 listener.onComplete(true);
+                                Log.i("TAG", "Success to login user");
                             }
                         } else {
                             Log.i("TAG", "Failed to login user", task.getException());
