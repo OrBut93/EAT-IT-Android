@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,7 +92,14 @@ public class AddRecFragment extends Fragment {
             return view;
         }
         else{
-              AlertDialogFragment.newInstance("Sorry","you must login befor");
+            view =  inflater.inflate(R.layout.fragment_login, container, false);
+              AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must login befor");
+              dialogFragment.show(getChildFragmentManager(), "TAG");
+
+//            NavController navController = Navigation.findNavController(view);
+////                                    navController.navigate(R.id.action_global_recListFragment);
+//            NavDirections directions = RegisterFragmentDirections.actionGlobalRecListFragment();
+//            navController.navigate(directions);
         }
 
         return view;
@@ -108,8 +116,6 @@ public class AddRecFragment extends Fragment {
         FirebaseFirestore fb = FirebaseFirestore.getInstance();
 
         final String userId = auth.getCurrentUser().getUid();
-
-
 
         Date date = new Date();
         StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
