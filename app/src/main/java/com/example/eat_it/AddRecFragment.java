@@ -52,39 +52,46 @@ public class AddRecFragment extends Fragment {
     TextView titleTV;
     TextView locationTv;
     TextView descriptionTV;
-    FirebaseAuth auth;
     FirebaseUser firebaseUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
+        if(auth.getCurrentUser()!=null){
+            view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
 
 //        auth = FirebaseAuth.getInstance();
 //        firebaseUser = auth.getCurrentUser();
 
-        imageView= view.findViewById(R.id.new_rec_image);
-        Button takePhotoBtn = view.findViewById(R.id.new_rec_takePhoto_btn);
-        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                takePhoto();
-            }
-        });
-        titleTV = view.findViewById(R.id.new_rec_title);
-        locationTv = view.findViewById(R.id.new_rec_location);
-        descriptionTV= view.findViewById(R.id.new_rec_description);
+            imageView= view.findViewById(R.id.new_rec_image);
+            Button takePhotoBtn = view.findViewById(R.id.new_rec_takePhoto_btn);
+            takePhotoBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    takePhoto();
+                }
+            });
+            titleTV = view.findViewById(R.id.new_rec_title);
+            locationTv = view.findViewById(R.id.new_rec_location);
+            descriptionTV= view.findViewById(R.id.new_rec_description);
 
 
-        Button saveBtn = view.findViewById(R.id.new_rec_save_btn);
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveRecommend();
-            }
-        });
+            Button saveBtn = view.findViewById(R.id.new_rec_save_btn);
+            saveBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveRecommend();
+                }
+            });
+            return view;
+        }
+        else{
+              AlertDialogFragment.newInstance("Sorry","you must login befor");
+        }
+
         return view;
     }
     void saveRecommend(){

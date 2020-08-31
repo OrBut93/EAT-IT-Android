@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
+import com.example.eat_it.model.User.UserFirebase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -72,20 +73,32 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
         super.onCreateOptionsMenu(menu);
         FirebaseAuth fauth = FirebaseAuth.getInstance();
 
-        if(fauth.getCurrentUser()!=null){
-            getMenuInflater().inflate(R.menu.logut_menu,menu);
-        }
-        else
-        {
-            getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        if (fauth.getCurrentUser() != null) {
+            getMenuInflater().inflate(R.menu.logut_menu, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.recommends_list_menu, menu);
         }
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.login_now_button:
+                Log.d("TAG", "fragment handle login menu");
+                navCtrl.navigate(R.id.action_global_loginFragment);
+                return true;
+
+            case R.id.logout_btn:
+                Log.d("TAG", "fragment handle logout menu");
+                UserFirebase.logout();
+                navCtrl.navigate(R.id.action_global_recListFragment);
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 //    @Override
 //    public void onItemSelected(String source, Outfit outfit) {

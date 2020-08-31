@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
 import com.example.eat_it.model.RecommendModel;
+import com.example.eat_it.model.User.UserFirebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
 import com.squareup.picasso.Picasso;
@@ -69,23 +70,24 @@ public class RecListFragment extends Fragment {
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        NavController navController = Navigation.findNavController(list);
-
-        switch (item.getItemId()){
-            case R.id.login_now_button:
-                Log.d("TAG","fragment handle login menu");
-                navController.navigate(R.id.action_global_loginFragment);
-                return true;
-
-            case R.id.logout_btn:
-                Log.d("TAG","fragment handle logout menu");
-                navController.navigate(R.id.action_global_recListFragment);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        NavController navController = Navigation.findNavController(list);
+//
+//        switch (item.getItemId()){
+//            case R.id.login_now_button:
+//                Log.d("TAG","fragment handle login menu");
+//                navController.navigate(R.id.action_global_loginFragment);
+//                return true;
+//
+//            case R.id.logout_btn:
+//                Log.d("TAG","fragment handle logout menu");
+//                UserFirebase.logout();
+//                navController.navigate(R.id.action_global_recListFragment);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void onAttach(@NonNull Context context) {

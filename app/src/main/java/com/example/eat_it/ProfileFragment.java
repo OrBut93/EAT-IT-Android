@@ -41,14 +41,17 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
         final TextView fullName = view.findViewById(R.id.user_profile_user_name);
-        String UserId= auth.getCurrentUser().getUid();
-        final DocumentReference documentReference = fb.collection("users").document(UserId);
-        documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                fullName.setText(documentSnapshot.getString("name"));
-            }
-        });
+        if(auth.getCurrentUser()!=null)
+        {
+            String UserId= auth.getCurrentUser().getUid();
+            final DocumentReference documentReference = fb.collection("users").document(UserId);
+            documentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                @Override
+                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
+                    fullName.setText(documentSnapshot.getString("name"));
+                }
+            });
+        }
 
 
 
