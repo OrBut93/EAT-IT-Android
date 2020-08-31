@@ -5,12 +5,17 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import static android.app.Activity.RESULT_OK;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -141,5 +146,22 @@ public class AddRecFragment extends Fragment {
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        NavController navController = Navigation.findNavController(view);
+
+        switch (item.getItemId()){
+            case R.id.login_now_button:
+                Log.d("TAG","fragment handle login menu");
+                navController.navigate(R.id.action_global_loginFragment);
+                return true;
+
+            case R.id.logout_btn:
+                Log.d("TAG","fragment handle logout menu");
+                navController.navigate(R.id.action_global_recListFragment);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

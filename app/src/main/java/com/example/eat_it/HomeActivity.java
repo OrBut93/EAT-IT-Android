@@ -23,7 +23,6 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
     RecyclerView list;
     NavController navCtrl;
     TextView userName;
-    FirebaseAuth fauth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +50,42 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
         navCtrl.navigate(directions);
     }
 
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        NavController navController = Navigation.findNavController(list);
+//
+//        switch (item.getItemId()){
+//            case R.id.login_now_button:
+//                Log.d("TAG","fragment handle login menu");
+//                navController.navigate(R.id.action_global_loginFragment);
+//                return true;
+//
+//            case R.id.logout_btn:
+//                Log.d("TAG","fragment handle logout menu");
+//                navController.navigate(R.id.action_global_recListFragment);
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        FirebaseAuth fauth = FirebaseAuth.getInstance();
+
+        if(fauth.getCurrentUser()!=null){
+            getMenuInflater().inflate(R.menu.logut_menu,menu);
+        }
+        else
+        {
+            getMenuInflater().inflate(R.menu.recommends_list_menu,menu);
+        }
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
 
 //    @Override
 //    public void onItemSelected(String source, Outfit outfit) {
