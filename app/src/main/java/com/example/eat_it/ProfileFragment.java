@@ -1,5 +1,7 @@
 package com.example.eat_it;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 /**
@@ -60,7 +63,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -104,6 +107,17 @@ public class ProfileFragment extends Fragment {
                 viewModel.logout();
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.recListFragment);
+            }
+        });
+
+        View mapBtn = view.findViewById(R.id.button_map);
+        mapBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onClick(View buttonView) {
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MapsActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
