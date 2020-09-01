@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import static android.content.Context.MODE_PRIVATE;
 import androidx.lifecycle.LiveData;
 import com.example.eat_it.MyApplication;
+import com.example.eat_it.model.User.User;
+
 import java.util.List;
 
 public class RecommendModel {
@@ -64,6 +66,9 @@ public class RecommendModel {
     }
 
 
+    public LiveData<List<Recommend>> getUserRecommends(User currentUser) {
+        return AppLocalDb.db.recommendDao().getUserRecommends(currentUser.id);
+    }
     public Recommend getRecommend(String id){
         return null;
     }

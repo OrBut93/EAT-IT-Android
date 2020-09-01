@@ -16,6 +16,9 @@ interface RecommendDao {
     @Query("select * from Recommend")
     LiveData<List<Recommend>> getAll();
 
+    @Query("select * from Recommend where ownerId = :userId")
+    LiveData<List<Recommend>> getUserRecommends(String userId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Recommend... recommends);
 
