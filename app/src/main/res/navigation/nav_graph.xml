@@ -38,12 +38,21 @@
         android:id="@+id/loginFragment"
         android:name="com.example.eat_it.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.example.eat_it.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_recListFragment"
+            app:destination="@id/recListFragment"
+            app:popUpTo="@id/recListFragment" />
+    </fragment>
     <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
     <action
         android:id="@+id/action_global_registerFragment"

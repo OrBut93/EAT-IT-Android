@@ -2,6 +2,7 @@ package com.example.eat_it;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
 
 import org.w3c.dom.Text;
 
@@ -34,15 +36,72 @@ import org.w3c.dom.Text;
 public class RegisterFragment extends Fragment {
 
     private RegisterViewModel mViewModel;
-
+    View view;
 
     public static RegisterFragment newInstance() {
         return new RegisterFragment();
     }
 
+//    @Override
+//    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        view = inflater.inflate(R.layout.fragment_register, container, false);
+//        View registerButton = view.findViewById(R.id.register_button);
+//        registerButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View buttonView) {
+//                TextView email = view.findViewById(R.id.register_user_email);
+//                TextView password = view.findViewById(R.id.register_user_password);
+//                TextView name = view.findViewById(R.id.register_user_name);
+//
+////                if (email.getText().toString().isEmpty()) {
+////                    email.setError("Email is Require");
+////                    return;
+////                }
+////                if (password.getText().toString().isEmpty()) {
+////                    password.setError("password is Require");
+////                    return;
+////                }
+////
+////                if (password.length() < 6) {
+////                    password.setError("Password must be more than 6 characters");
+////                }
+//
+//                mViewModel.register(email.getText().toString(),password.getText().toString(),name.getText().toString(),new UserModel.Listener<Boolean>() {
+//                    @Override
+//                    public void onComplete(Boolean data) {
+//                        if(data){
+//                            NavController navCtrl = Navigation.findNavController(view);
+//                                    navCtrl.popBackStack();
+//                                    navCtrl.popBackStack();
+//                        }
+//                    }});
+////                            @Override
+////                            public void onComplete(Boolean data) {
+////                                if (data) {
+////                                    NavController navCtrl = Navigation.findNavController(view);
+////                                    navCtrl.popBackStack();
+////                                    navCtrl.popBackStack();
+////                                }
+////                            }
+////                        }
+////                        );
+//            }
+//        });
+//        return view;
+//    }
+
+//    UserModel.Listener<Boolean> listener = new UserModel.Listener<Boolean>() {
+//        @Override
+//        public void onComplete(Boolean data) {
+//            Intent i = new Intent(getActivity(), HomeActivity.class);
+//            startActivity(i);
+//            ((Activity) getActivity()).overridePendingTransition(0, 0);
+//        }
+//    };
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_register, container, false);
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_register, container, false);
         View registerButton = view.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,42 +109,32 @@ public class RegisterFragment extends Fragment {
                 TextView email = view.findViewById(R.id.register_user_email);
                 TextView password = view.findViewById(R.id.register_user_password);
                 TextView name = view.findViewById(R.id.register_user_name);
-
-                if(email.getText().toString().isEmpty()){
-                    email.setError("Email is Require");
-                    return;
-                }
-                if(password.getText().toString().isEmpty()){
-                    password.setError("password is Require");
-                    return;
-                }
-
-                if(password.length() < 6)
-                {
-                    password.setError("Password must be more than 6 characters");
-                }
-
                 mViewModel.register(
                         email.getText().toString(),
                         password.getText().toString(),
                         name.getText().toString(),
                         new UserModel.Listener<Boolean>() {
-//                            @SuppressLint("ResourceType")
                             @Override
                             public void onComplete(Boolean data) {
                                 if (data) {
-                                    ///// navigate to home page ?
                                     NavController navController = Navigation.findNavController(view);
-//                                    navController.navigate(R.id.action_global_recListFragment);
-                                    NavDirections directions = RegisterFragmentDirections.actionGlobalRecListFragment();
-                                    navController.navigate(directions);
+                                    navController.navigateUp();
+                                    navController.navigateUp();
                                 }
                             }
                         });
+
+
+
+
             }
+
         });
+
         return view;
     }
+
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

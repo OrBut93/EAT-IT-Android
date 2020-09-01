@@ -1,8 +1,11 @@
 package com.example.eat_it.model.User;
 
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +29,7 @@ public class UserFirebase {
     }
 
     public static void register(final User user, String password, final UserModel.Listener<Boolean> listener) {
+
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(user.email, password)
@@ -48,14 +52,17 @@ public class UserFirebase {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("TAG", "Success add user to db" + user.id);
+                                    listener.onComplete(true);
+
                                 }
                             });
                         } else {
                             Log.w("TAG", "Failed to register user", task.getException());
                             if (listener != null) {
-                                listener.onComplete(false);
+                                listener.onComplete(true);
                             }
                         }
+                        listener.onComplete(true);
                     }
                 });
     }
