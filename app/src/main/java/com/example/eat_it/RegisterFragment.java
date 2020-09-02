@@ -102,13 +102,15 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_register, container, false);
-        View registerButton = view.findViewById(R.id.register_button);
+        final View registerButton = view.findViewById(R.id.register_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View buttonView) {
                 TextView email = view.findViewById(R.id.register_user_email);
                 TextView password = view.findViewById(R.id.register_user_password);
                 TextView name = view.findViewById(R.id.register_user_name);
+                final NavController navController = Navigation.findNavController(view);
+
                 mViewModel.register(
                         email.getText().toString(),
                         password.getText().toString(),
@@ -117,7 +119,6 @@ public class RegisterFragment extends Fragment {
                             @Override
                             public void onComplete(Boolean data) {
                                 if (data) {
-                                    NavController navController = Navigation.findNavController(view);
                                     navController.navigateUp();
                                     navController.navigateUp();
                                 }
