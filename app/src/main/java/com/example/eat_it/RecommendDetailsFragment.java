@@ -81,6 +81,13 @@ public class RecommendDetailsFragment extends Fragment {
             }
         });
 
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("TAG","edit recommend");
+            }
+        });
+
 
         View closeBtn = view.findViewById(R.id.rec_details_close_btn);
         closeBtn.setOnClickListener(new View.OnClickListener() {
