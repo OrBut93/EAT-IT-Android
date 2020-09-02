@@ -3,6 +3,9 @@ package com.example.eat_it.model;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.example.eat_it.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
@@ -26,42 +29,6 @@ import java.util.Map;
 public class RecommendFirebase {
 
 	final static String RECOMMENDS_COLLECTION = "recommends";
-	
-//    FirebaseFirestore db;
-////    final Map<String, Object> recommend;
-////
-////    public ModelFirebase(){
-////        db = FirebaseFirestore.getInstance();
-////        recommend = new HashMap<>();
-////
-////        recommend.put("first", "Ada");
-////        recommend.put("last", "Lovelace");
-////        recommend.put("born", 1815);
-////    }
-
-//    public static void getAllRecommendsSince(long since, final RecommendModel.Listener<List<Recommend>> listener) {
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Timestamp ts = new Timestamp(since,0);
-//
-//        db.collection(RECOMMENDS_COLLECTION).whereGreaterThanOrEqualTo("lastUpdated", ts)
-//                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                List<Recommend> recData = null;
-//                if (task.isSuccessful()){
-//                    recData = new LinkedList<Recommend>();
-//                    for(QueryDocumentSnapshot doc : task.getResult()){
-//                        Map<String,Object> json = doc.getData();
-//                        Recommend recommend = factory(json);
-//                        recData.add(recommend);
-//                    }
-//                }
-//                listener.onComplete(recData);
-//                Log.d("TAG","refresh " + recData.size());
-//            }
-//        });
-//    }
 
     public static void getAllRecommendsSince(long since, final RecommendModel.Listener<List<Recommend>> listener) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -76,8 +43,8 @@ public class RecommendFirebase {
                             listener.onComplete(null);
                         }
 
-                        List<Recommend> outfits = new LinkedList<>();
-                        List<Recommend> outfitsToDelete = new LinkedList<>();
+                        List<Recommend> recommends = new LinkedList<>();
+                        List<Recommend> recommendsToDelete = new LinkedList<>();
 
                         for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
                             switch (documentChange.getType()) {
@@ -87,22 +54,22 @@ public class RecommendFirebase {
                                     if (!metadata.hasPendingWrites()) {
                                         Map<String, Object> json = documentChange.getDocument().getData();
                                         Recommend recommend = factory(documentChange.getDocument().getId(), json);
-                                        outfits.add(recommend);
+                                        recommends.add(recommend);
                                     }
                                     break;
                                 case REMOVED:
                                     Map<String, Object> json = documentChange.getDocument().getData();
                                     Recommend recommend = factory(documentChange.getDocument().getId(), json);
-                                    outfitsToDelete.add(recommend);
+                                    recommendsToDelete.add(recommend);
                                     break;
                             }
                         }
 
-//                        if (!outfitsToDelete.isEmpty()) {
-//                            RecommendModel.instance.deleteOutfits(outfitsToDelete);
-//                        }
+                        if (!recommendsToDelete.isEmpty()) {
+                            RecommendModel.instance.deleteRecommends(recommendsToDelete);
+                        }
 
-                        listener.onComplete(outfits);
+                        listener.onComplete(recommends);
                     }
                 });
     }
@@ -157,7 +124,6 @@ public class RecommendFirebase {
             public void onComplete(@NonNull Task<Void> task) {
                 if (listener!=null){
                     listener.onComplete(task.isSuccessful());
-                    String myID2 = db.collection(RECOMMENDS_COLLECTION).document(task.toString()).getId();
                 }
             }
         });
@@ -180,7 +146,7 @@ public class RecommendFirebase {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (!task.isSuccessful()) {
-                    Log.w("TAG", "Failed to delete outfit", task.getException());
+                    Log.w("TAG", "Failed to delete recommend", task.getException());
                 }
             }
         });

@@ -10,7 +10,7 @@ public class RecommendDetailsViewModel {
         return UserModel.instance.getCurrentUser();
     }
 
-    public void deleteOutfit(Recommend recommend) {
+    public void deleteRecommend(Recommend recommend) {
         RecommendModel.instance.deleteRecommend(recommend);
     }
 }

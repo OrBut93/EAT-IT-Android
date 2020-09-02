@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.eat_it.model.Recommend;
+import com.example.eat_it.model.RecommendFirebase;
+import com.example.eat_it.model.RecommendModel;
 import com.example.eat_it.model.User.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
@@ -31,13 +34,14 @@ public class RecommendDetailsFragment extends Fragment {
     TextView location;
     TextView description;
     ImageView imageUrl;
-     RecommendDetailsViewModel viewModel;
+     private  RecommendDetailsViewModel viewModel;
+     RecommendFirebase fire;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_recommend_details, container, false);
+        final View view = inflater.inflate(R.layout.fragment_recommend_details, container, false);
         ownerId = view.findViewById(R.id.rec_details_recommendId);
         title= view.findViewById(R.id.rec_details_title);
         location = view.findViewById(R.id.rec_details_location);
@@ -54,10 +58,28 @@ public class RecommendDetailsFragment extends Fragment {
         View deleteBtn = view.findViewById(R.id.delete_btn);
 
         if (ownerId!=null && ownerId.getText().toString().equals((auth.getCurrentUser().getUid()))) {
-            Log.d("TAG", "is the same");
             editBtn.setVisibility(View.VISIBLE);
             deleteBtn.setVisibility(View.VISIBLE);
         }
+
+
+//        editBtn.setOnClickListener(new View.OnClickListener() {
+//            NavController navController = Navigation.findNavController(view);
+//
+//            @Override
+//            public void onClick(View v) {
+//                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalAddRecFragment();
+//                navController.navigate(updatedDirections);
+//            }
+//        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fire.deleteRecommend(recommend.id);
+                Log.d("TAG", "delete clicked");
+            }
+        });
 
 
         View closeBtn = view.findViewById(R.id.rec_details_close_btn);
@@ -68,9 +90,6 @@ public class RecommendDetailsFragment extends Fragment {
                 navCtrl.popBackStack();
             }
         });
-
-//        editBtn.setVisibility(View.INVISIBLE);
-//        deleteBtn.setVisibility(View.INVISIBLE);
 
         return view;
     }

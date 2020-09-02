@@ -3,6 +3,8 @@ package com.example.eat_it.model;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
+
 import static android.content.Context.MODE_PRIVATE;
 import androidx.lifecycle.LiveData;
 import com.example.eat_it.MyApplication;
@@ -15,6 +17,7 @@ public class RecommendModel {
     static public final RecommendModel instance = new RecommendModel();
 
     RecommendFirebase modelFirebase;
+
     public interface Listener<T>{
         void onComplete(T data);
     }
@@ -22,17 +25,24 @@ public class RecommendModel {
         void onComplete();
     }
     public RecommendModel(){
-        modelFirebase= new RecommendFirebase();
+
     }
 
-    public void addRec(Recommend recommend,Listener<Boolean> listener) {
-        modelFirebase.addRecommend(recommend,listener);
-//        AppLocalDb.db.recommendDao().insertAll(recommend);
+    public LiveData<List<Recommend>> getAllRecommends(){
+        LiveData<List<Recommend>> liveData = (LiveData<List<Recommend>>) AppLocalDb.db.recommendDao().getAll();
+        refreshRecommendList(null);
+        return liveData;
     }
+    public LiveData<List<Recommend>> getUserRecommends(User currentUser) {
+        return AppLocalDb.db.recommendDao().getUserRecommends(currentUser.id);
+    }
+
+
 
     public void refreshRecommendList(final CompListener listener){
         long lastUpdated = MyApplication.context.getSharedPreferences("TAG",MODE_PRIVATE).getLong("RecommendsLastUpdateDate",0);
-        modelFirebase.getAllRecommendsSince(lastUpdated,new Listener<List<Recommend>>() {
+
+        RecommendFirebase.getAllRecommendsSince(lastUpdated,new Listener<List<Recommend>>() {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onComplete(final List<Recommend> data) {
@@ -45,7 +55,7 @@ public class RecommendModel {
                             if (recommend.lastUpdated > lastUpdated) lastUpdated = recommend.lastUpdated;
                         }
                         SharedPreferences.Editor edit = MyApplication.context.getSharedPreferences("TAG", MODE_PRIVATE).edit();
-                        edit.putLong("StudentsLastUpdateDate",lastUpdated);
+                        edit.putLong("RecommendsLastUpdateDate",lastUpdated);
                         edit.commit();
                         return "";
                     }
@@ -59,30 +69,33 @@ public class RecommendModel {
         });
     }
 
-    public LiveData<List<Recommend>> getAllRecommends(){
-        LiveData<List<Recommend>> liveData = (LiveData<List<Recommend>>) AppLocalDb.db.recommendDao().getAll();
-        refreshRecommendList(null);
-        return liveData;
-    }
 
 
-    public LiveData<List<Recommend>> getUserRecommends(User currentUser) {
-        return AppLocalDb.db.recommendDao().getUserRecommends(currentUser.id);
+    public void addRec(Recommend recommend,Listener<Boolean> listener) {
+        modelFirebase.addRecommend(recommend,listener);
+//        AppLocalDb.db.recommendDao().insertAll(recommend);
     }
+
     public void deleteRecommend(Recommend recommend) {
         RecommendFirebase.deleteRecommend(recommend.id);
     }
 
+    @SuppressLint("StaticFieldLeak")
+    public void deleteRecommends(final List<Recommend> recommends) {
+        new AsyncTask<String, String, String>() {
+            @Override
+            protected String doInBackground(String... strings) {
+                for (Recommend recommend : recommends) {
+                    AppLocalDb.db.recommendDao().delete(recommend);
+                }
+                return "";
+            }
 
-    public Recommend getRecommend(String id){
-        return null;
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                Log.d("TAG", "deleted outfits");
+            }
+        }.execute("");
     }
-
-
-    void updateRec(Recommend recommend) {
-    }
-
-    void deleteRec(String id) {
-    }
-
 }

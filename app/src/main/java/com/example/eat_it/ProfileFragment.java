@@ -94,8 +94,8 @@ public class ProfileFragment extends Fragment {
         LiveData<List<Recommend>> liveData = viewModel.getData();
         liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
             @Override
-            public void onChanged(List<Recommend> outfits) {
-                profileRecommendsData = outfits;
+            public void onChanged(List<Recommend> recommends) {
+                profileRecommendsData = recommends;
                 adapter.notifyDataSetChanged();
             }
         });
