@@ -81,6 +81,7 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
         return true;
     }
 
+    HomeActivityViewModel mViewModel;
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //        NavController navController = Navigation.findNavController(list);
@@ -96,6 +97,11 @@ public class HomeActivity extends AppCompatActivity implements RecListFragment.D
                 Log.d("TAG", "fragment handle logout menu");
                 UserFirebase.logout();
                 navCtrl.navigate(R.id.action_global_recListFragment);
+                return true;
+
+            case R.id.Add_button_menu:
+                Log.d("TAG", "fragment handle add menu");
+                navCtrl.navigate(R.id.addRecFragment);
                 return true;
 
         }

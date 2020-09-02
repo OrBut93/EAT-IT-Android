@@ -27,7 +27,11 @@
         android:id="@+id/addRecFragment"
         android:name="com.example.eat_it.AddRecFragment"
         android:label="Add"
-        tools:layout="@layout/fragment_add_rec" />
+        tools:layout="@layout/fragment_add_rec" >
+        <argument
+            android:name="recommend"
+            app:argType="com.example.eat_it.model.Recommend" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.eat_it.ProfileFragment"
