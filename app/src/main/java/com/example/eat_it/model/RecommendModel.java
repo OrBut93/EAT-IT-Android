@@ -87,6 +87,7 @@ public class RecommendModel {
             protected String doInBackground(String... strings) {
                 for (Recommend recommend : recommends) {
                     AppLocalDb.db.recommendDao().delete(recommend);
+                    Log.d("TAG","deleted");
                 }
                 return "";
             }
@@ -94,7 +95,7 @@ public class RecommendModel {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Log.d("TAG", "deleted outfits");
+                Log.d("TAG", "deleted recommends");
             }
         }.execute("");
     }
