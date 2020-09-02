@@ -26,6 +26,7 @@ import com.example.eat_it.model.StoreModel;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -34,11 +35,10 @@ import java.util.Date;
  * Use the {@link AddRecFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddRecFragment extends Fragment {
+public class EditRecommendFragment extends Fragment {
 
-    public AddRecFragment() {}
+    public EditRecommendFragment() {}
 
-    AddRecViewModel mViewModel;
     View view;
     ImageView imageView;
     Bitmap imageBitmap;
@@ -58,48 +58,38 @@ public class AddRecFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        if(auth.getCurrentUser()!=null){
-            view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
+        view =  inflater.inflate(R.layout.fragment_edit_recommend, container, false);
+        recommend = EditRecommendFragmentArgs.fromBundle(getArguments()).getRecommend();
 
 
+        Button takePhotoBtn = view.findViewById(R.id.edit_rec_takePhoto_btn);
+        takePhotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
+        titleTV = view.findViewById(R.id.edit_rec_title);
+        locationTv = view.findViewById(R.id.edit_rec_location);
+        descriptionTV= view.findViewById(R.id.edit_rec_description);
+        imageView= view.findViewById(R.id.edit_rec_image);
 
-            imageView= view.findViewById(R.id.edit_rec_image);
-            Button takePhotoBtn = view.findViewById(R.id.edit_rec_takePhoto_btn);
-            takePhotoBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    takePhoto();
-                }
-            });
-            titleTV = view.findViewById(R.id.edit_rec_title);
-            locationTv = view.findViewById(R.id.edit_rec_location);
-            descriptionTV= view.findViewById(R.id.edit_rec_description);
+        titleTV.setText(recommend.title);
+        locationTv.setText(recommend.location);
+        descriptionTV.setText(recommend.description);
+        Picasso.get().load(recommend.avatar).placeholder(R.drawable.avatar).into(imageView);
 
-
-            Button saveBtn = view.findViewById(R.id.edit_rec_save_btn);
-            saveBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    saveRecommend();
-                }
-            });
-            return view;
-        }
-        else{
-            view =  inflater.inflate(R.layout.fragment_login, container, false);
-              AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must login befor");
-              dialogFragment.show(getChildFragmentManager(), "TAG");
-
-//            NavController navController = Navigation.findNavController(view);
-////                                    navController.navigate(R.id.action_global_recListFragment);
-//            NavDirections directions = RegisterFragmentDirections.actionGlobalRecListFragment();
-//            navController.navigate(directions);
-        }
-
+        Button saveBtn = view.findViewById(R.id.edit_rec_save_btn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveRecommend();
+            }
+        });
         return view;
+
+
     }
     void saveRecommend(){
         final String id ;
@@ -143,18 +133,18 @@ public class AddRecFragment extends Fragment {
     final static int RESAULT_SUCCESS = 0;
 
     void takePhoto(){
-            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE &&
                 resultCode == RESULT_OK) {
-           Bundle extras = data.getExtras();
-           imageBitmap = rotateImage((Bitmap) extras.get("data"));
-           imageView.setImageBitmap(imageBitmap);
+            Bundle extras = data.getExtras();
+            imageBitmap = rotateImage((Bitmap) extras.get("data"));
+            imageView.setImageBitmap(imageBitmap);
         }
     }
     public static Bitmap rotateImage(Bitmap source) {

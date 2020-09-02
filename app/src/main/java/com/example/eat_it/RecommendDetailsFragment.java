@@ -86,7 +86,7 @@ public class RecommendDetailsFragment extends Fragment {
             public void onClick(View v) {
                 Log.d("TAG","edit recommend");
                 NavController navController = Navigation.findNavController(view);
-                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalAddRecFragment(recommend);
+                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalEditRecommendFragment(recommend);
                 navController.navigate(updatedDirections);
             }
         });

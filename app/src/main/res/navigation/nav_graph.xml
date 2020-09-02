@@ -27,11 +27,7 @@
         android:id="@+id/addRecFragment"
         android:name="com.example.eat_it.AddRecFragment"
         android:label="Add"
-        tools:layout="@layout/fragment_add_rec" >
-        <argument
-            android:name="recommend"
-            app:argType="com.example.eat_it.model.Recommend" />
-    </fragment>
+        tools:layout="@layout/fragment_add_rec" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.eat_it.ProfileFragment"
@@ -61,4 +57,12 @@
     <action
         android:id="@+id/action_global_registerFragment"
         app:destination="@id/registerFragment" /><action android:id="@+id/action_global_recListFragment" app:destination="@id/recListFragment"/>
+    <fragment
+        android:id="@+id/editRecommendFragment"
+        android:name="com.example.eat_it.EditRecommendFragment"
+        android:label="EditRecommendFragment" >
+        <argument
+            android:name="recommend"
+            app:argType="com.example.eat_it.model.Recommend" />
+    </fragment><action android:id="@+id/action_global_editRecommendFragment" app:destination="@id/editRecommendFragment"/>
 </navigation>
