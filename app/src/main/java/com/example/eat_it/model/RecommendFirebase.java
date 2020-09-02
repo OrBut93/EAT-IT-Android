@@ -14,6 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.SnapshotMetadata;
 import com.google.firestore.v1.Document;
 
@@ -157,6 +158,29 @@ public class RecommendFirebase {
                 if (listener!=null){
                     listener.onComplete(task.isSuccessful());
                     String myID2 = db.collection(RECOMMENDS_COLLECTION).document(task.toString()).getId();
+                }
+            }
+        });
+    }
+
+    public static void updateRecommend(Recommend recommend, final RecommendModel.CompListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> recommendJson = toJson(recommend);
+        db.collection(RECOMMENDS_COLLECTION).document(recommend.id).set(recommendJson, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (listener != null) listener.onComplete();
+            }
+        });
+    }
+
+    public static void deleteRecommend(String recId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection(RECOMMENDS_COLLECTION).document(recId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.w("TAG", "Failed to delete outfit", task.getException());
                 }
             }
         });

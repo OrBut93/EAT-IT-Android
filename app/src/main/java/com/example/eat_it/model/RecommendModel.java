@@ -69,6 +69,11 @@ public class RecommendModel {
     public LiveData<List<Recommend>> getUserRecommends(User currentUser) {
         return AppLocalDb.db.recommendDao().getUserRecommends(currentUser.id);
     }
+    public void deleteRecommend(Recommend recommend) {
+        RecommendFirebase.deleteRecommend(recommend.id);
+    }
+
+
     public Recommend getRecommend(String id){
         return null;
     }
