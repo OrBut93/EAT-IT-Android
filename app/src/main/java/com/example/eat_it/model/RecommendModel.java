@@ -68,11 +68,17 @@ public class RecommendModel {
             }
         });
     }
+    public void updateRecommend(Recommend recommend,Listener<Boolean> listener) {
+        modelFirebase.updateRecommend(recommend, (CompListener) listener);
+
+//        AppLocalDb.db.recommendDao().insertAll(recommend);
+    }
 
 
 
     public void addRec(Recommend recommend,Listener<Boolean> listener) {
         modelFirebase.addRecommend(recommend,listener);
+
 //        AppLocalDb.db.recommendDao().insertAll(recommend);
     }
 

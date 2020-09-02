@@ -21,8 +21,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.eat_it.model.Recommend;
+import com.example.eat_it.model.RecommendFirebase;
 import com.example.eat_it.model.RecommendModel;
 import com.example.eat_it.model.StoreModel;
+import com.example.eat_it.model.User.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,6 +51,9 @@ public class EditRecommendFragment extends Fragment {
     TextView locationTv;
     TextView descriptionTV;
     private Recommend recommend;
+    RecommendFirebase fire;
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,40 +97,66 @@ public class EditRecommendFragment extends Fragment {
 
     }
     void saveRecommend(){
-        final String id ;
-        String OwnerId;
-        String OwnerName = "";
+
         final String title= titleTV.getText().toString();
         final String location= locationTv.getText().toString();
         final String description= descriptionTV.getText().toString();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseFirestore fb = FirebaseFirestore.getInstance();
+        String userId = auth.getCurrentUser().getUid();
 
-        final String userId = auth.getCurrentUser().getUid();
 
-        Date date = new Date();
-        StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+        final Recommend newRecommend = new Recommend(userId, "", title,location, description,recommend.avatar);
+
+        if (!recommend.id.isEmpty()) {
+            newRecommend.setId(recommend.id);
+        }
+
+        fire.updateRecommend(newRecommend, new RecommendModel.CompListener() {
             @Override
-            public void onSuccess(final String url) {
-                Log.d("TAG","url: " + url);
-                Recommend recommend = new Recommend(userId,"", title, location,description, url);
-                RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean data) {
-                        NavController navCtrl = Navigation.findNavController(view);
-                        navCtrl.navigateUp();
-                    }
-                });
-            }
+            public void onComplete() {
+                NavController navController = Navigation.findNavController(view);
 
-            @Override
-            public void onFail() {
-//                progressbr.setVisibility(View.INVISIBLE);
-                Snackbar mySnackbar = Snackbar.make(view,R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
-                mySnackbar.show();
+                if (!recommend.id.isEmpty())
+                    navController.navigate(R.id.recListFragment);
+                else
+                    navController.navigateUp();
             }
         });
+
+
+
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseFirestore fb = FirebaseFirestore.getInstance();
+//
+//        final String userId = auth.getCurrentUser().getUid();
+//
+//        Date date = new Date();
+//        StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+//            @Override
+//            public void onSuccess(final String url) {
+//                Log.d("TAG","url: " + url);
+//                recommend.title= title;
+//                recommend.location = location;
+//                recommend.description=description;
+//                Picasso.get().load(recommend.avatar).placeholder(R.drawable.avatar).into(imageView);
+////                Recommend recommend = new Recommend(userId,"", title, location,description, url);
+//                RecommendModel.instance.updateRecommend(recommend, new RecommendModel.Listener<Boolean>() {
+//                    @Override
+//                    public void onComplete(Boolean data) {
+//                        NavController navCtrl = Navigation.findNavController(view);
+//                        navCtrl.navigateUp();
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onFail() {
+////                progressbr.setVisibility(View.INVISIBLE);
+//                Snackbar mySnackbar = Snackbar.make(view,R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
+//                mySnackbar.show();
+//            }
+//        });
 
 
     }
