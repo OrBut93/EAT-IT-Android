@@ -82,6 +82,7 @@ public class RecommendDetailsFragment extends Fragment {
                 NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalProfileFragment();
                 navController.navigate(updatedDirections);
 
+
             }
         });
 
