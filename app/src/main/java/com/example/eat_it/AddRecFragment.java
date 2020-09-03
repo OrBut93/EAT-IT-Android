@@ -7,9 +7,12 @@ import android.os.Bundle;
 import static android.app.Activity.RESULT_OK;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -23,10 +26,18 @@ import android.widget.TextView;
 import com.example.eat_it.model.Recommend;
 import com.example.eat_it.model.RecommendModel;
 import com.example.eat_it.model.StoreModel;
+import com.example.eat_it.model.User.User;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import org.w3c.dom.Document;
 import java.util.Date;
 
 /**
@@ -48,12 +59,6 @@ public class AddRecFragment extends Fragment {
     TextView titleTV;
     TextView locationTv;
     TextView descriptionTV;
-    private Recommend recommend;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,22 +69,20 @@ public class AddRecFragment extends Fragment {
         if(auth.getCurrentUser()!=null){
             view =  inflater.inflate(R.layout.fragment_add_rec, container, false);
 
-
-
-            imageView= view.findViewById(R.id.edit_rec_image);
-            Button takePhotoBtn = view.findViewById(R.id.edit_rec_takePhoto_btn);
+            imageView= view.findViewById(R.id.new_rec_image);
+            Button takePhotoBtn = view.findViewById(R.id.new_rec_takePhoto_btn);
             takePhotoBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     takePhoto();
                 }
             });
-            titleTV = view.findViewById(R.id.edit_rec_title);
-            locationTv = view.findViewById(R.id.edit_rec_location);
-            descriptionTV= view.findViewById(R.id.edit_rec_description);
+            titleTV = view.findViewById(R.id.new_rec_title);
+            locationTv = view.findViewById(R.id.new_rec_location);
+            descriptionTV= view.findViewById(R.id.new_rec_description);
 
 
-            Button saveBtn = view.findViewById(R.id.edit_rec_save_btn);
+            Button saveBtn = view.findViewById(R.id.new_rec_save_btn);
             saveBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,27 +118,34 @@ public class AddRecFragment extends Fragment {
         final String userId = auth.getCurrentUser().getUid();
 
         Date date = new Date();
-        StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
-            @Override
-            public void onSuccess(final String url) {
-                Log.d("TAG","url: " + url);
-                Recommend recommend = new Recommend(userId,"", title, location,description, url);
-                RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
-                    @Override
-                    public void onComplete(Boolean data) {
-                        NavController navCtrl = Navigation.findNavController(view);
-                        navCtrl.navigateUp();
-                    }
-                });
-            }
+        if (imageBitmap != null) {
+        	StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+                @Override
+                public void onSuccess(final String url) {
+                    Log.d("TAG","url: " + url);
+                    Recommend recommend = new Recommend(userId,"", title, location,description, url);
+                    RecommendModel.instance.addRec(recommend, new RecommendModel.Listener<Boolean>() {
+                        @Override
+                        public void onComplete(Boolean data) {
+                            NavController navCtrl = Navigation.findNavController(view);
+                            navCtrl.navigateUp();
+                        }
+                    });
+                }
 
-            @Override
-            public void onFail() {
-//                progressbr.setVisibility(View.INVISIBLE);
-                Snackbar mySnackbar = Snackbar.make(view,R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
-                mySnackbar.show();
-            }
-        });
+                @Override
+                public void onFail() {
+//                    progressbr.setVisibility(View.INVISIBLE);
+                    Snackbar mySnackbar = Snackbar.make(view,R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
+                }
+            });
+        }
+        else {
+            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must load photo");
+            dialogFragment.show(getChildFragmentManager(), "TAG");
+        }
+        
 
 
     }
