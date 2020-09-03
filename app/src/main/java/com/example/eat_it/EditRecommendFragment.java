@@ -53,8 +53,6 @@ public class EditRecommendFragment extends Fragment {
     private Recommend recommend;
     RecommendFirebase fire;
 
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,5 +201,4 @@ public class EditRecommendFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
