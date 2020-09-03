@@ -135,7 +135,10 @@ public class RegisterFragment extends Fragment {
                                 @Override
                                 public void onComplete(Boolean data) {
                                     if (data) {
+//                                        navController.navigateUp();
+//                                        navController.navigate(R.id.aboutFragment);
                                         navController.navigateUp();
+
                                         navController.navigateUp();
                                     }
                                 }

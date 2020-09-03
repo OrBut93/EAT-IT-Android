@@ -65,62 +65,77 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_profile, container, false);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        User user = UserModel.instance.getCurrentUser();
+        if(auth.getCurrentUser()!=null) {
+            view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        if (user != null) {
-            TextView userName = view.findViewById(R.id.user_profile_user_name);
-            userName.setText(user.name);
+            User user = UserModel.instance.getCurrentUser();
+
+            if (user != null) {
+                TextView userName = view.findViewById(R.id.user_profile_user_name);
+                userName.setText(user.name);
+            }
+
+            profileOutfitsList = view.findViewById(R.id.profile_recommends_list);
+            profileOutfitsList.setHasFixedSize(true);
+
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+            profileOutfitsList.setLayoutManager(layoutManager);
+
+            adapter = new RecommendsListAdapter();
+            profileOutfitsList.setAdapter(adapter);
+
+            adapter.setOnItemClickListener(new RecListFragment.OnItemClickListener() {
+                @Override
+                public void onClick(int position) {
+                    Recommend recommend = profileRecommendsData.get(position);
+                    parent.onItemSelected(recommend);
+                }
+            });
+
+            LiveData<List<Recommend>> liveData = viewModel.getData();
+            liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
+                @Override
+                public void onChanged(List<Recommend> recommends) {
+                    profileRecommendsData = recommends;
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
+            View logoutButton = view.findViewById(R.id.user_profile_logout_button);
+            logoutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View buttonView) {
+                    viewModel.logout();
+                    NavController navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.recListFragment);
+                }
+            });
+
+            View mapBtn = view.findViewById(R.id.button_map);
+            mapBtn.setOnClickListener(new View.OnClickListener() {
+                @SuppressLint("ResourceType")
+                @Override
+                public void onClick(View buttonView) {
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), MapsActivity.class);
+                    getActivity().startActivity(intent);
+                }
+            });
+
+            return view;
         }
+        else{
+            view =  inflater.inflate(R.layout.fragment_login, container, false);
+            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must login befor");
+            dialogFragment.show(getChildFragmentManager(), "TAG");
 
-        profileOutfitsList = view.findViewById(R.id.profile_recommends_list);
-        profileOutfitsList.setHasFixedSize(true);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        profileOutfitsList.setLayoutManager(layoutManager);
-
-        adapter = new RecommendsListAdapter();
-        profileOutfitsList.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new RecListFragment.OnItemClickListener() {
-            @Override
-            public void onClick(int position) {
-                Recommend recommend = profileRecommendsData.get(position);
-                parent.onItemSelected(recommend);
-            }
-        });
-
-        LiveData<List<Recommend>> liveData = viewModel.getData();
-        liveData.observe(getViewLifecycleOwner(), new Observer<List<Recommend>>() {
-            @Override
-            public void onChanged(List<Recommend> recommends) {
-                profileRecommendsData = recommends;
-                adapter.notifyDataSetChanged();
-            }
-        });
-
-        View logoutButton = view.findViewById(R.id.user_profile_logout_button);
-        logoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View buttonView) {
-                viewModel.logout();
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.recListFragment);
-            }
-        });
-
-        View mapBtn = view.findViewById(R.id.button_map);
-        mapBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onClick(View buttonView) {
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MapsActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
-
+//            NavController navController = Navigation.findNavController(view);
+////                                    navController.navigate(R.id.action_global_recListFragment);
+//            NavDirections directions = RegisterFragmentDirections.actionGlobalRecListFragment();
+//            navController.navigate(directions);
+        }
         return view;
     }
 

@@ -15,7 +15,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recommend_list_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="@drawable/e258d758045e3e2f5fc6270f4592ec088" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
