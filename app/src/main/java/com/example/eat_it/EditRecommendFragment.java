@@ -116,10 +116,11 @@ public class EditRecommendFragment extends Fragment {
                 NavController navController = Navigation.findNavController(view);
 
                 if (!recommend.id.isEmpty())
-                    navController.navigate(R.id.recListFragment);
+                    navController.navigate(R.id.profileFragment);
                 else
                     navController.navigateUp();
             }
+            
         });
 
 
