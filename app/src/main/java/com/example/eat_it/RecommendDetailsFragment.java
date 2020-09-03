@@ -78,6 +78,7 @@ public class RecommendDetailsFragment extends Fragment {
             public void onClick(View v) {
                 fire.deleteRecommend(recommend.id);
                 Log.d("TAG", "delete clicked");
+
             }
         });
 

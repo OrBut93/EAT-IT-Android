@@ -64,5 +64,5 @@
         <argument
             android:name="recommend"
             app:argType="com.example.eat_it.model.Recommend" />
-    </fragment><action android:id="@+id/action_global_editRecommendFragment" app:destination="@id/editRecommendFragment"/>
+    </fragment><action android:id="@+id/action_global_editRecommendFragment" app:destination="@id/editRecommendFragment"/><action android:id="@+id/action_global_profileFragment" app:destination="@id/profileFragment"/>
 </navigation>
