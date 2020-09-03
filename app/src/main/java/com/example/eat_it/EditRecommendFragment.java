@@ -52,6 +52,7 @@ public class EditRecommendFragment extends Fragment {
     TextView descriptionTV;
     private Recommend recommend;
     RecommendFirebase fire;
+    Boolean take=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class EditRecommendFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 takePhoto();
+                take=true;
             }
         });
         titleTV = view.findViewById(R.id.edit_rec_title);
@@ -107,13 +109,13 @@ public class EditRecommendFragment extends Fragment {
         ////////////////////////
         Date date = new Date();
 
-        if (imageBitmap != null) {
 
+        if(take) {
             StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
                 @Override
                 public void onSuccess(final String url) {
                     Log.d("TAG", "url: " + url);
-                    final Recommend newRecommend = new Recommend(userId, "", title,location, description,url);
+                    final Recommend newRecommend = new Recommend(userId, "", title, location, description, url);
 
                     if (!recommend.id.isEmpty()) {
                         newRecommend.setId(recommend.id);
@@ -141,11 +143,28 @@ public class EditRecommendFragment extends Fragment {
                 }
             });
         }
-        else {
-            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must load photo");
-            dialogFragment.show(getChildFragmentManager(), "TAG");
+        else{
+            final Recommend newRecommend = new Recommend(userId, "", title,location, description,recommend.avatar);
+
+            if (!recommend.id.isEmpty()) {
+                newRecommend.setId(recommend.id);
+            }
+
+            fire.updateRecommend(newRecommend, new RecommendModel.CompListener() {
+                @Override
+                public void onComplete() {
+                    NavController navController = Navigation.findNavController(view);
+
+                    if (!recommend.id.isEmpty())
+                        navController.navigate(R.id.profileFragment);
+                    else
+                        navController.navigateUp();
+                }
+
+            });
         }
 
+    }
 
 
 
@@ -153,7 +172,10 @@ public class EditRecommendFragment extends Fragment {
 
 
 
-        /////////////////////
+
+
+
+    /////////////////////
 
 
 
@@ -193,7 +215,7 @@ public class EditRecommendFragment extends Fragment {
 //        });
 
 
-    }
+
 
 
     static final int REQUEST_IMAGE_CAPTURE = 1;
