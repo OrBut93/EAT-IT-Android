@@ -15,6 +15,7 @@ import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,19 +112,41 @@ public class RegisterFragment extends Fragment {
                 TextView name = view.findViewById(R.id.register_user_name);
                 final NavController navController = Navigation.findNavController(view);
 
-                mViewModel.register(
-                        email.getText().toString(),
-                        password.getText().toString(),
-                        name.getText().toString(),
-                        new UserModel.Listener<Boolean>() {
-                            @Override
-                            public void onComplete(Boolean data) {
-                                if (data) {
-                                    navController.navigateUp();
-                                    navController.navigateUp();
+                if (name.getText().toString().isEmpty()) {
+                    name.setError("name is required");
+                }
+
+                if (password.getText().toString().isEmpty()) {
+                    password.setError("password is Require");
+                    return;
+                }
+
+                if (password.length() < 6) {
+                    password.setError("Password must be more than 6 characters");
+                }
+
+                if(!TextUtils.isEmpty(email.getText()) && Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())
+                {
+                    mViewModel.register(
+                            email.getText().toString(),
+                            password.getText().toString(),
+                            name.getText().toString(),
+                            new UserModel.Listener<Boolean>() {
+                                @Override
+                                public void onComplete(Boolean data) {
+                                    if (data) {
+                                        navController.navigateUp();
+                                        navController.navigateUp();
+                                    }
                                 }
-                            }
-                        });
+                            });
+                }
+                else{
+                    AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Error","check the email");
+                    dialogFragment.show(getChildFragmentManager(), "TAG");
+                }
+
+
 
 
 
