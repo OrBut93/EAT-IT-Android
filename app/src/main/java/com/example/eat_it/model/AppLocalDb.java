@@ -17,4 +17,5 @@ public class AppLocalDb{
                     "Eat-It-Android.db")
                     .fallbackToDestructiveMigration()
                     .build();
+
 }

@@ -4,16 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/e258d758045e3e2f5fc6270f4592ec0811"
     tools:context=".LoginFragment">
 
     <TextView
         android:id="@+id/login_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="88dp"
+        android:layout_height="52dp"
         android:layout_marginStart="156dp"
         android:layout_marginTop="84dp"
         android:text="Login"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,6 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="70dp"
         android:text="Email:"
+        android:textColor="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_title" />
@@ -35,6 +39,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="50dp"
         android:text="Password:"
+        android:textColor="#FFFDFD"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_user_email_label" />
@@ -47,6 +52,7 @@
         android:layout_marginTop="70dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:textColor="#FBFBFB"
         app:layout_constraintStart_toEndOf="@+id/login_user_email_label"
         app:layout_constraintTop_toBottomOf="@+id/login_title" />
 
@@ -58,6 +64,7 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/login_user_password_label"
         app:layout_constraintTop_toBottomOf="@+id/login_user_email" />
 
@@ -80,6 +87,7 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="90dp"
         android:text="Not register to our app?"
+        android:textColor="#FFFFFF"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,7 +112,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="Failed to login, check the email/password"
-        android:textColor="#FF0000"
+        android:textColor="#FFFEFE"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
