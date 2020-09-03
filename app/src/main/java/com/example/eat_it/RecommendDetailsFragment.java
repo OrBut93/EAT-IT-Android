@@ -78,6 +78,9 @@ public class RecommendDetailsFragment extends Fragment {
             public void onClick(View v) {
                 fire.deleteRecommend(recommend.id);
                 Log.d("TAG", "delete clicked");
+                NavController navController = Navigation.findNavController(view);
+                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalProfileFragment();
+                navController.navigate(updatedDirections);
 
             }
         });
