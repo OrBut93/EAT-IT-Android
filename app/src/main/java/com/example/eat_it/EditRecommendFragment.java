@@ -102,27 +102,61 @@ public class EditRecommendFragment extends Fragment {
 
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        String userId = auth.getCurrentUser().getUid();
+        final String userId = auth.getCurrentUser().getUid();
 
+        ////////////////////////
+        Date date = new Date();
 
-        final Recommend newRecommend = new Recommend(userId, "", title,location, description,recommend.avatar);
+        if (imageBitmap != null) {
 
-        if (!recommend.id.isEmpty()) {
-            newRecommend.setId(recommend.id);
+            StoreModel.uploadImage(imageBitmap, "OR_photo" + date.getTime(), new StoreModel.Listener() {
+                @Override
+                public void onSuccess(final String url) {
+                    Log.d("TAG", "url: " + url);
+                    final Recommend newRecommend = new Recommend(userId, "", title,location, description,url);
+
+                    if (!recommend.id.isEmpty()) {
+                        newRecommend.setId(recommend.id);
+                    }
+
+                    fire.updateRecommend(newRecommend, new RecommendModel.CompListener() {
+                        @Override
+                        public void onComplete() {
+                            NavController navController = Navigation.findNavController(view);
+
+                            if (!recommend.id.isEmpty())
+                                navController.navigate(R.id.profileFragment);
+                            else
+                                navController.navigateUp();
+                        }
+
+                    });
+                }
+
+                @Override
+                public void onFail() {
+//                progressbr.setVisibility(View.INVISIBLE);
+                    Snackbar mySnackbar = Snackbar.make(view, R.string.fail_to_save_recommend, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
+                }
+            });
+        }
+        else {
+            AlertDialogFragment dialogFragment= AlertDialogFragment.newInstance("Sorry","you must load photo");
+            dialogFragment.show(getChildFragmentManager(), "TAG");
         }
 
-        fire.updateRecommend(newRecommend, new RecommendModel.CompListener() {
-            @Override
-            public void onComplete() {
-                NavController navController = Navigation.findNavController(view);
 
-                if (!recommend.id.isEmpty())
-                    navController.navigate(R.id.profileFragment);
-                else
-                    navController.navigateUp();
-            }
-            
-        });
+
+
+
+
+
+
+        /////////////////////
+
+
+
 
 
 
@@ -160,6 +194,8 @@ public class EditRecommendFragment extends Fragment {
 
 
     }
+
+
     static final int REQUEST_IMAGE_CAPTURE = 1;
     final static int RESAULT_SUCCESS = 0;
 
