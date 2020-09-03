@@ -36,31 +36,34 @@ public class RecommendDetailsFragment extends Fragment {
     ImageView imageUrl;
      private  RecommendDetailsViewModel viewModel;
      RecommendFirebase fire;
+     View view;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View view = inflater.inflate(R.layout.fragment_recommend_details, container, false);
-        ownerId = view.findViewById(R.id.rec_details_recommendId);
-        title= view.findViewById(R.id.rec_details_title);
-        location = view.findViewById(R.id.rec_details_location);
-        description = view.findViewById(R.id.rec_details_description);
-        imageUrl = view.findViewById(R.id.rec_details_image);
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        recommend = RecommendDetailsFragmentArgs.fromBundle(getArguments()).getRecommend();
-        if (recommend!=null){
-            update_display();
-        }
+        if (auth.getCurrentUser() != null) {
+            view = inflater.inflate(R.layout.fragment_recommend_details, container, false);
+            ownerId = view.findViewById(R.id.rec_details_recommendId);
+            title = view.findViewById(R.id.rec_details_title);
+            location = view.findViewById(R.id.rec_details_location);
+            description = view.findViewById(R.id.rec_details_description);
+            imageUrl = view.findViewById(R.id.rec_details_image);
 
-        View editBtn = view.findViewById(R.id.edit_btn);
-        View deleteBtn = view.findViewById(R.id.delete_btn);
+            recommend = RecommendDetailsFragmentArgs.fromBundle(getArguments()).getRecommend();
+            if (recommend != null) {
+                update_display();
+            }
 
-        if (ownerId!=null && ownerId.getText().toString().equals((auth.getCurrentUser().getUid()))) {
-            editBtn.setVisibility(View.VISIBLE);
-            deleteBtn.setVisibility(View.VISIBLE);
-        }
+            View editBtn = view.findViewById(R.id.edit_btn);
+            View deleteBtn = view.findViewById(R.id.delete_btn);
+
+            if (ownerId != null && ownerId.getText().toString().equals((auth.getCurrentUser().getUid()))) {
+                editBtn.setVisibility(View.VISIBLE);
+                deleteBtn.setVisibility(View.VISIBLE);
+            }
 
 
 //        editBtn.setOnClickListener(new View.OnClickListener() {
@@ -73,39 +76,49 @@ public class RecommendDetailsFragment extends Fragment {
 //            }
 //        });
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fire.deleteRecommend(recommend.id);
-                Log.d("TAG", "delete clicked");
-                NavController navController = Navigation.findNavController(view);
-                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalProfileFragment();
-                navController.navigate(updatedDirections);
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fire.deleteRecommend(recommend.id);
+                    Log.d("TAG", "delete clicked");
+                    NavController navController = Navigation.findNavController(view);
+                    NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalProfileFragment();
+                    navController.navigate(updatedDirections);
 
 
-            }
-        });
+                }
+            });
 
-        editBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TAG","edit recommend");
-                NavController navController = Navigation.findNavController(view);
-                NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalEditRecommendFragment(recommend);
-                navController.navigate(updatedDirections);
-            }
-        });
+            editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("TAG", "edit recommend");
+                    NavController navController = Navigation.findNavController(view);
+                    NavDirections updatedDirections = RecommendDetailsFragmentDirections.actionGlobalEditRecommendFragment(recommend);
+                    navController.navigate(updatedDirections);
+                }
+            });
 
 
-        View closeBtn = view.findViewById(R.id.rec_details_close_btn);
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NavController navCtrl = Navigation.findNavController(v);
-                navCtrl.popBackStack();
-            }
-        });
+            View closeBtn = view.findViewById(R.id.rec_details_close_btn);
+            closeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavController navCtrl = Navigation.findNavController(v);
+                    navCtrl.popBackStack();
+                }
+            });
 
+            return view;
+        } else {
+            view = inflater.inflate(R.layout.fragment_login, container, false);
+            AlertDialogFragment dialogFragment = AlertDialogFragment.newInstance("Sorry", "you must login befor");
+            dialogFragment.show(getChildFragmentManager(), "TAG");
+
+
+
+
+        }
         return view;
     }
 
