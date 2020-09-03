@@ -114,6 +114,7 @@ public class RegisterFragment extends Fragment {
 
                 if (name.getText().toString().isEmpty()) {
                     name.setError("name is required");
+                    return;
                 }
 
                 if (password.getText().toString().isEmpty()) {
@@ -123,6 +124,7 @@ public class RegisterFragment extends Fragment {
 
                 if (password.length() < 6) {
                     password.setError("Password must be more than 6 characters");
+                    return;
                 }
 
                 if(!TextUtils.isEmpty(email.getText()) && Patterns.EMAIL_ADDRESS.matcher(email.getText()).matches())

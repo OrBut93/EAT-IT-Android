@@ -100,6 +100,7 @@ public class EditRecommendFragment extends Fragment {
         final String location= locationTv.getText().toString();
         final String description= descriptionTV.getText().toString();
 
+
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String userId = auth.getCurrentUser().getUid();
 
